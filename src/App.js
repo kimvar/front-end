@@ -25,9 +25,7 @@ function App() {
             <TabPanel>
               <LoginForm />
             </TabPanel>
-            <TabPanel>
-              <EditForm />
-            </TabPanel>
+            <TabPanel>{/* <EditForm /> */}</TabPanel>
           </TabPanels>
         </Tabs>
       </div>

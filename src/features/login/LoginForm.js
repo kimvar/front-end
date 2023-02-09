@@ -10,7 +10,7 @@ function LoginForm() {
 
   const [ifrmSrc, setIfrmSrc] = useState(null);
   const [isIfrmVisible, setIfrmVisible] = useState(false);
-
+  const [timeStamp, setTimeStamp] = useState(Date.now());
   const onSubmit = (data) => {
     let userID = {
       name: data.name,
@@ -22,6 +22,10 @@ function LoginForm() {
     setIfrmSrc(
       `https://form.jotform.com/230393262424956?userID=${userID.name}-${userID.surName}-${userID.tc}`
     );
+  };
+
+  const refresh = () => {
+    setTimeStamp(Date.now());
   };
 
   const logout = () => {
@@ -57,12 +61,19 @@ function LoginForm() {
           </Box>
         ) : (
           <Flex gap={15} flexDirection="column">
-            <Flex justifyContent={"flex-end"}>
-              <Button type="submit" colorScheme="blue" onClick={logout}>
+            <Flex justifyContent={"space-between"} gap="20px">
+              <Button type="button" colorScheme="green" onClick={refresh}>
+                Yeni Kayıt
+              </Button>
+              <Button type="button" colorScheme="blue" onClick={logout}>
                 Çıkış
               </Button>
             </Flex>
-            <iframe src={ifrmSrc} title="Form" className="iframe"></iframe>
+            <iframe
+              src={ifrmSrc + "&timestamp=" + timeStamp}
+              title="Form"
+              className="iframe"
+            ></iframe>
           </Flex>
         )}
       </Box>

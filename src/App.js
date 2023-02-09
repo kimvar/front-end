@@ -6,14 +6,16 @@ import {
   Tab,
   TabPanel,
   Heading,
+  Box,
 } from "@chakra-ui/react";
 import EditForm from "features/EditForm";
 
 function App() {
   return (
     <div>
-      <Heading>Afet İletişim</Heading>
-
+      <Box padding="15px">
+        <Heading>Afet İletişim</Heading>
+      </Box>
       <div style={{ width: "100%" }} className="App">
         <Tabs>
           <TabList>
@@ -26,7 +28,6 @@ function App() {
               <LoginForm />
             </TabPanel>
             <TabPanel>
-              {" "}
               <EditForm />
             </TabPanel>
           </TabPanels>

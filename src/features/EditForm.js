@@ -20,7 +20,7 @@ function EditForm() {
         <>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Flex flexDirection="column" gap={15} maxWidth={500}>
-              <label htmlFor="code">Barcod No:</label>
+              <label htmlFor="code">Kayıt No:</label>
               <Input required {...register("code")} />
               <Button type="submit" colorScheme="blue">
                 Düzenle
@@ -29,12 +29,8 @@ function EditForm() {
           </form>
         </>
         {isIfrmVisible && (
-          <div className="iframe">
-            <iframe
-              src={ifrmSrc}
-              title="Form"
-              style={{ height: "100vh", width: "100%" }}
-            ></iframe>
+          <div>
+            <iframe src={ifrmSrc} title="Form" className="iframe"></iframe>
           </div>
         )}{" "}
       </Box>

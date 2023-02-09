@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form";
 
 import styles from "./loginForm.module.css";
 import { useState } from "react";
-import { Button, Box } from "@chakra-ui/react";
+import { Button, Box, Flex } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 
 function LoginForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, reset, handleSubmit } = useForm();
 
-  const [ifrmSrc, setIfrmSrc] = useState("");
+  const [ifrmSrc, setIfrmSrc] = useState(null);
   const [isIfrmVisible, setIfrmVisible] = useState(false);
 
   const onSubmit = (data) => {
@@ -18,13 +18,17 @@ function LoginForm() {
       tc: data.id,
     };
 
-    console.log("data");
     setIfrmVisible(true);
     setIfrmSrc(
       `https://form.jotform.com/230393262424956?userID=${userID.name}-${userID.surName}-${userID.tc}`
     );
   };
 
+  const logout = () => {
+    setIfrmVisible(false);
+    ifrmSrc(null);
+    reset();
+  };
   return (
     <Box flex alignItems={"center"}>
       <Box flex alignItems="center">
@@ -52,13 +56,14 @@ function LoginForm() {
             </form>
           </Box>
         ) : (
-          <div className="iframe">
-            <iframe
-              src={ifrmSrc}
-              title="Form"
-              style={{ height: "100vh", width: "100%" }}
-            ></iframe>
-          </div>
+          <Flex gap={15} flexDirection="column">
+            <Flex justifyContent={"flex-end"}>
+              <Button type="submit" colorScheme="blue" onClick={logout}>
+                Çıkış
+              </Button>
+            </Flex>
+            <iframe src={ifrmSrc} title="Form" className="iframe"></iframe>
+          </Flex>
         )}
       </Box>
     </Box>

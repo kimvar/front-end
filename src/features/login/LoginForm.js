@@ -4,6 +4,7 @@ import styles from "./loginForm.module.css";
 import { useState } from "react";
 import { Button, Box, Flex } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
+import { tcknQuery } from "utils";
 
 function LoginForm() {
   const { register, reset, handleSubmit } = useForm();
@@ -12,16 +13,16 @@ function LoginForm() {
   const [isIfrmVisible, setIfrmVisible] = useState(false);
   const [timeStamp, setTimeStamp] = useState(Date.now());
   const onSubmit = (data) => {
-    let userID = {
-      name: data.name,
-      surName: data.surName,
-      tc: data.id,
-    };
+    const { name, surName, tckn } = data;
+    const _iframeSrc = `https://form.jotform.com/230393262424956?userID=${name}-${surName}-${tckn}`;
+
+    if (!tcknQuery(tckn)) {
+      alert("Lütfen geçerli bir T.C. Kimlik Numarası giriniz.");
+      return;
+    }
 
     setIfrmVisible(true);
-    setIfrmSrc(
-      `https://form.jotform.com/230393262424956?userID=${userID.name}-${userID.surName}-${userID.tc}`
-    );
+    setIfrmSrc(_iframeSrc);
   };
 
   const refresh = () => {
@@ -51,8 +52,13 @@ function LoginForm() {
                 <Input required {...register("surName", { required: true })} />
               </div>
               <div>
-                <label htmlFor="id">Görevli TC</label>
-                <Input required {...register("id")} />
+                <label htmlFor="tckn">Görevli TC</label>
+                <Input
+                  minLength={11}
+                  maxLength={11}
+                  required
+                  {...register("tckn")}
+                />
               </div>
               <Button type="submit" colorScheme="blue">
                 Giriş

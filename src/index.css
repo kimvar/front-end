@@ -4,3 +4,8 @@
   width: 100%;
   height: calc(100vh - 180px);
 }
+
+.chakra-tabs__tab-panel,
+.chakra-tabs__tab-panels {
+  outline: 0 !important;
+}

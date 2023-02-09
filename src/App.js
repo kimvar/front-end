@@ -7,7 +7,6 @@ import {
   TabPanel,
   Heading,
 } from "@chakra-ui/react";
-import EditForm from "features/EditForm";
 
 function App() {
   return (

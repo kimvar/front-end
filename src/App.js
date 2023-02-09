@@ -7,6 +7,7 @@ import {
   TabPanel,
   Heading,
 } from "@chakra-ui/react";
+import EditForm from "features/EditForm";
 
 function App() {
   return (
@@ -24,7 +25,10 @@ function App() {
             <TabPanel>
               <LoginForm />
             </TabPanel>
-            <TabPanel>{/* <EditForm /> */}</TabPanel>
+            <TabPanel>
+              {" "}
+              <EditForm />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </div>

@@ -25,9 +25,9 @@ function LoginForm() {
   };
 
   const logout = () => {
+    reset(null);
     setIfrmVisible(false);
     ifrmSrc(null);
-    reset();
   };
   return (
     <Box flex alignItems={"center"}>

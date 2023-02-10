@@ -36,6 +36,7 @@ function LoginForm() {
       setLoading(false);
     } else {
       setIsError(true);
+      setLoading(false);
     }
   };
 

@@ -1,12 +1,8 @@
 import React from "react";
 import {
+  Flex,
   Button,
   Box,
-  Flex,
-  Input,
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
   Center,
   Card,
   CardHeader,
@@ -15,13 +11,35 @@ import {
   Heading,
   Divider,
   Link,
-  Text,
   Image,
 } from "@chakra-ui/react";
-
 import { useForm } from "react-hook-form";
+
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { FormProvider, FormRenderer } from "components/HookForms/FormProvider";
+
+const schema = {
+  submitLabel: "Giriş Yap",
+  fields: [
+    {
+      name: "email",
+      label: "E-posta adresiniz",
+      placeholder: "E-posta adresiniz",
+      component: "input",
+      isRequired: true,
+    },
+    {
+      name: "password",
+      label: "Parolanız",
+      placeholder: "Parolanız",
+      type: "password",
+      component: "input",
+      isRequired: true,
+    },
+  ],
+};
 
 const Login = () => {
   const formScheme = yup.object().shape({
@@ -35,13 +53,7 @@ const Login = () => {
       .required("Parola alanı zorunludur."),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    isSubmitting,
-    reset,
-  } = useForm({
+  const methods = useForm({
     resolver: yupResolver(formScheme),
     defaultValues: {
       email: "",
@@ -49,9 +61,10 @@ const Login = () => {
     },
   });
 
+  const { handleSubmit, reset } = methods;
+
   const onSubmit = (data) => {
     console.log(data);
-
     reset();
   };
 
@@ -67,7 +80,7 @@ const Login = () => {
     >
       <Center>
         <Box minW={{ base: "90%", md: "408px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Card p={2} borderRadius="lg">
               <CardHeader>
                 <Center>
@@ -78,54 +91,27 @@ const Login = () => {
               </CardHeader>
               <Divider></Divider>
               <CardBody>
-                <FormControl isInvalid={errors.email}>
-                  <FormLabel htmlFor="email">
-                    <Text fontSize="xs">E-posta Adresiniz</Text>
-                  </FormLabel>
-                  <Input
-                    id="email"
-                    placeholder="E-posta adresi"
-                    {...register("email")}
-                  />
-                  <FormErrorMessage>
-                    {errors.email && (
-                      <Text fontSize={"sx"}>{errors.email.message}</Text>
-                    )}
-                  </FormErrorMessage>
-                </FormControl>
-              </CardBody>
-              <CardBody>
-                <FormControl isInvalid={errors.password}>
-                  <FormLabel htmlFor="password">
-                    <Text fontSize="xs">Şifreniz</Text>
-                  </FormLabel>
-                  <Input
-                    type={"password"}
-                    id="password"
-                    placeholder="Şifreniz"
-                    {...register("password")}
-                  />
-                  <FormErrorMessage>
-                    {errors.password && (
-                      <Text fontSize={"sx"}>{errors.password.message}</Text>
-                    )}
-                  </FormErrorMessage>
-                </FormControl>
+                {schema.fields.map((field, index) => {
+                  return (
+                    <FormRenderer key={index} field={field}></FormRenderer>
+                  );
+                })}
               </CardBody>
               <CardFooter>
                 <Button
                   mt={4}
                   colorScheme="teal"
-                  isLoading={isSubmitting}
+                  isLoading={methods.isSubmitting}
                   type="submit"
                   borderRadius={0}
                   variant="solid"
                   width="full"
                 >
-                  Giriş Yap
+                  {schema.submitLabel}
                 </Button>
               </CardFooter>
               <Divider></Divider>
+
               <CardFooter m={0} p={0}>
                 <Box
                   justifyContent={"center"}
@@ -156,9 +142,10 @@ const Login = () => {
                 </Box>
               </CardFooter>
             </Card>
-          </form>
+          </FormProvider>
         </Box>
       </Center>
+      ;
     </Flex>
   );
 };

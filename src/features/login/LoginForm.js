@@ -31,10 +31,10 @@ function LoginForm() {
     );
 
     if (res.data.content.length > 0) {
+      setIsError(false);
       setIfrmVisible(true);
       setIfrmSrc(_iframeSrc);
       setLoading(false);
-      setIsError(false);
     } else {
       setIsError(true);
       setLoading(false);

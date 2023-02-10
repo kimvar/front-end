@@ -68,6 +68,7 @@ function LoginForm() {
               <div>
                 <label htmlFor="tckn">Görevli TC No :</label>
                 <Input
+                  type="number"
                   minLength={11}
                   maxLength={11}
                   required

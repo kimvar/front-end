@@ -38,6 +38,27 @@ const schema = {
       component: "input",
       isRequired: true,
     },
+    {
+      name: "test",
+      label: "Test",
+      placeholder: "Test",
+      component: "select",
+      isRequired: true,
+      options: [
+        {
+          title: "Option 1",
+          value: 1,
+        },
+        {
+          title: "Option 2",
+          value: 2,
+        },
+        {
+          title: "Option 3",
+          value: 3,
+        },
+      ],
+    },
   ],
 };
 

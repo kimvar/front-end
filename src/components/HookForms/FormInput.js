@@ -7,7 +7,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 
-export default function FormInput({ name, disabled = false, title, ...other }) {
+export default function FormInput({ name, label, type = "text" }) {
   const { control } = useFormContext();
 
   return (
@@ -19,15 +19,9 @@ export default function FormInput({ name, disabled = false, title, ...other }) {
         <>
           <FormControl isInvalid={error}>
             <FormLabel htmlFor={name}>
-              <Text fontSize="xs">{other.label}</Text>
+              <Text fontSize="xs">{label}</Text>
             </FormLabel>
-            <Input
-              title="test"
-              id={name}
-              disabled={disabled}
-              {...field}
-              {...other}
-            />
+            <Input id={name} {...field} type={type} />
             <FormErrorMessage>
               {error && <Text fontSize={"sx"}>{error.message}</Text>}
             </FormErrorMessage>

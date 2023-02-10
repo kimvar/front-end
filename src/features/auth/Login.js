@@ -13,22 +13,22 @@ import {
   Link,
   Image,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormProvider, FormRenderer } from "components/HookForms/FormProvider";
+import { FormRenderer } from "components/HookForms/FormRenderer";
 
 const schema = {
   submitLabel: "Giriş Yap",
+  id: "login-form",
   fields: [
     {
       name: "email",
       label: "E-posta adresiniz",
       placeholder: "E-posta adresiniz",
       component: "input",
-      isRequired: true,
     },
     {
       name: "password",
@@ -36,14 +36,12 @@ const schema = {
       placeholder: "Parolanız",
       type: "password",
       component: "input",
-      isRequired: true,
     },
     {
       name: "test",
       label: "Test",
       placeholder: "Test",
       component: "select",
-      isRequired: true,
       options: [
         {
           title: "Option 1",
@@ -82,7 +80,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const { reset } = methods;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -101,69 +99,67 @@ const Login = () => {
     >
       <Center>
         <Box minW={{ base: "90%", md: "408px" }}>
-          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-            <Card p={2} borderRadius="lg">
-              <CardHeader>
-                <Center>
-                  <Heading as={"h3"} size="md">
-                    Giriş Yap
-                  </Heading>
-                </Center>
-              </CardHeader>
-              <Divider></Divider>
+          <Card p={2} borderRadius="lg">
+            <CardHeader>
+              <Center>
+                <Heading as={"h3"} size="md">
+                  Giriş Yap
+                </Heading>
+              </Center>
+            </CardHeader>
+            <Divider></Divider>
+            <FormProvider {...methods} onSubmit={onSubmit}>
               <CardBody>
-                {schema.fields.map((field, index) => {
-                  return (
-                    <FormRenderer key={index} field={field}></FormRenderer>
-                  );
-                })}
+                <FormRenderer schema={schema}></FormRenderer>
               </CardBody>
-              <CardFooter>
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={methods.isSubmitting}
-                  type="submit"
-                  borderRadius={0}
-                  variant="solid"
-                  width="full"
-                >
-                  {schema.submitLabel}
-                </Button>
-              </CardFooter>
-              <Divider></Divider>
+            </FormProvider>
 
-              <CardFooter m={0} p={0}>
-                <Box
-                  justifyContent={"center"}
-                  alignContent="center"
-                  width={"100%"}
-                  style={{ textAlign: "center" }}
-                >
-                  <Center>
-                    <Image
-                      boxSize="130px"
-                      objectFit="contain"
-                      src="/logo.png"
-                      alt="Afet İletişim Bilgi Sistemi"
-                    />
-                  </Center>
-                </Box>
-              </CardFooter>
-              <CardFooter m={0} p={0}>
-                <Box
-                  justifyContent={"center"}
-                  alignContent="center"
-                  width={"100%"}
-                  style={{ textAlign: "center" }}
-                >
-                  <Link color="teal.500" href="#" fontSize={"xs"}>
-                    Şifremi Unuttum
-                  </Link>
-                </Box>
-              </CardFooter>
-            </Card>
-          </FormProvider>
+            <CardFooter>
+              <Button
+                mt={4}
+                form="login-form"
+                colorScheme="teal"
+                isLoading={methods.isSubmitting}
+                type="submit"
+                borderRadius={0}
+                variant="solid"
+                width="full"
+              >
+                {schema.submitLabel}
+              </Button>
+            </CardFooter>
+            <Divider></Divider>
+
+            <CardFooter m={0} p={0}>
+              <Box
+                justifyContent={"center"}
+                alignContent="center"
+                width={"100%"}
+                style={{ textAlign: "center" }}
+              >
+                <Center>
+                  <Image
+                    boxSize="130px"
+                    objectFit="contain"
+                    src="/logo.png"
+                    alt="Afet İletişim Bilgi Sistemi"
+                  />
+                </Center>
+              </Box>
+            </CardFooter>
+            <CardFooter m={0} p={0}>
+              <Box
+                justifyContent={"center"}
+                alignContent="center"
+                width={"100%"}
+                style={{ textAlign: "center" }}
+              >
+                <Link color="teal.500" href="#" fontSize={"xs"}>
+                  Şifremi Unuttum
+                </Link>
+              </Box>
+            </CardFooter>
+          </Card>
         </Box>
       </Center>
       ;

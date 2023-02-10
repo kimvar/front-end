@@ -1,26 +1,18 @@
-import FormInput from "components/HookForms/FormInput";
-
-import FormSelect from "components/HookForms/FormSelect";
-
 import { Box } from "@chakra-ui/react";
+import { useFormContext } from "react-hook-form";
+import { InputRenderer } from "./InputRenderer";
 
-const FormRenderer = ({ field }) => {
-  if (field.component === "input") {
-    return (
-      <Box key={field.name} mt={4}>
-        <FormInput {...field}></FormInput>
+const FormRenderer = ({ schema }) => {
+  const { handleSubmit } = useFormContext();
+  return (
+    <form onSubmit={handleSubmit(schema.onSubmit)} id={schema.id}>
+      <Box mt={4}>
+        {schema.fields.map((field) => {
+          return <InputRenderer key={field.name} field={field}></InputRenderer>;
+        })}
       </Box>
-    );
-  }
-
-  if (field.component === "select") {
-    return (
-      <Box key={field.name} mt={4}>
-        <FormSelect {...field}></FormSelect>
-      </Box>
-    );
-  }
-
+    </form>
+  );
 };
 
 export { FormRenderer };

@@ -98,7 +98,9 @@ function LoginForm() {
         {isError && (
           <Alert maxW={600} justifyContent="center" status="error">
             <AlertIcon />
-            <AlertTitle>Lütfen geçerli bir TC numarası giriniz.</AlertTitle>
+            <AlertTitle>
+              Girdiğiniz bilgilerin sisteme erişim yetkisi bulunmamaktadır.
+            </AlertTitle>
           </Alert>
         )}
       </Box>

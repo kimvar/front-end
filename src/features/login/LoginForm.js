@@ -34,6 +34,7 @@ function LoginForm() {
       setIfrmVisible(true);
       setIfrmSrc(_iframeSrc);
       setLoading(false);
+      setIsError(false);
     } else {
       setIsError(true);
       setLoading(false);

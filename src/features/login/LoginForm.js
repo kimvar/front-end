@@ -87,7 +87,7 @@ function LoginForm() {
                   {...register("tckn")}
                 />
               </div>
-              <Button type="submit" colorScheme="blue">
+              <Button type="submit" colorScheme="blue" disabled={loading}>
                 {loading ? "Yükleniyor..." : "Giriş"}
               </Button>
             </form>

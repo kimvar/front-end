@@ -17,8 +17,12 @@ function EditForm() {
   const [ifrmSrc, setIfrmSrc] = useState("");
   const [isIfrmVisible, setIfrmVisible] = useState(false);
   const [isError, setError] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const onSubmit = async ({ code }) => {
     setError(false);
+    setLoading(true);
+    setIfrmVisible(false);
+
     try {
       const res = await axios.get(
         `https://api.jotform.com/form/230393262424956/submissions?apiKey=38c1f731467c6e32e36eca2c5c&filter={"q77":${code}}`
@@ -28,9 +32,10 @@ function EditForm() {
       setIfrmVisible(true);
       setIfrmSrc(`https://jotform.com/edit/${id}`);
     } catch {
-      setIfrmVisible(true);
+      setIfrmSrc(null);
       setError(true);
     }
+    setLoading(false);
   };
 
   return (
@@ -46,9 +51,15 @@ function EditForm() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Flex flexDirection="column" gap={15} maxWidth={500}>
               <label htmlFor="code">Depremzede TC No:</label>
-              <Input required {...register("code")} />
+              <Input
+                required
+                type="number"
+                {...register("code")}
+                min="10000000000"
+                max="99999999999"
+              />
               <Button type="submit" colorScheme="blue">
-                Düzenle
+                {isLoading ? "Yükleniyor..." : "Düzenle"}
               </Button>
             </Flex>
           </form>

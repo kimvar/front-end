@@ -66,7 +66,12 @@ function LoginForm() {
               </div>
               <div>
                 <label htmlFor="tckn">Görevli TC No :</label>
-                <Input maxLength={11} required {...register("tckn")} />
+                <Input
+                  minLength={11}
+                  maxLength={11}
+                  required
+                  {...register("tckn")}
+                />
               </div>
               <Button type="submit" colorScheme="blue">
                 {loading ? "Yükleniyor..." : "Giriş"}

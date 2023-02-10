@@ -1,9 +1,10 @@
 import { FormProvider as Form } from "react-hook-form";
-
-export default function FormProvider({ children, onSubmit, methods }) {
+import { FormRenderer } from "./FormRenderer";
+function FormProvider({ onSubmit, methods, children }) {
   return (
     <Form {...methods}>
       <form onSubmit={onSubmit}>{children}</form>
     </Form>
   );
 }
+export { FormProvider, FormRenderer };

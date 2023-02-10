@@ -1,8 +1,8 @@
 import React from "react";
 import {
+  Flex,
   Button,
   Box,
-  Flex,
   Center,
   Card,
   CardHeader,
@@ -13,21 +13,21 @@ import {
   Link,
   Image,
 } from "@chakra-ui/react";
-
 import { useForm } from "react-hook-form";
+
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import FormProvider from "components/HookForms/FormProvider";
-import FormInput from "components/HookForms/FormInput";
+import { FormProvider, FormRenderer } from "components/HookForms/FormProvider";
 
 const schema = {
+  submitLabel: "Giriş Yap",
   fields: [
     {
       name: "email",
       label: "E-posta adresiniz",
       placeholder: "E-posta adresiniz",
-      component: ({ ...others }) => <FormInput {...others} />,
+      component: "input",
       isRequired: true,
     },
     {
@@ -35,8 +35,29 @@ const schema = {
       label: "Parolanız",
       placeholder: "Parolanız",
       type: "password",
-      component: ({ ...others }) => <FormInput {...others} />,
+      component: "input",
       isRequired: true,
+    },
+    {
+      name: "test",
+      label: "Test",
+      placeholder: "Test",
+      component: "select",
+      isRequired: true,
+      options: [
+        {
+          title: "Option 1",
+          value: 1,
+        },
+        {
+          title: "Option 2",
+          value: 2,
+        },
+        {
+          title: "Option 3",
+          value: 3,
+        },
+      ],
     },
   ],
 };
@@ -61,7 +82,7 @@ const Login = () => {
     },
   });
 
-  const { handleSubmit, isSubmitting, reset } = methods;
+  const { handleSubmit, reset } = methods;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -90,27 +111,28 @@ const Login = () => {
                 </Center>
               </CardHeader>
               <Divider></Divider>
-              {schema.fields.map((field, index) => {
-                return (
-                  <CardBody key={index}>
-                    {field.component({ ...field, component: undefined })}
-                  </CardBody>
-                );
-              })}
+              <CardBody>
+                {schema.fields.map((field, index) => {
+                  return (
+                    <FormRenderer key={index} field={field}></FormRenderer>
+                  );
+                })}
+              </CardBody>
               <CardFooter>
                 <Button
                   mt={4}
                   colorScheme="teal"
-                  isLoading={isSubmitting}
+                  isLoading={methods.isSubmitting}
                   type="submit"
                   borderRadius={0}
                   variant="solid"
                   width="full"
                 >
-                  Giriş Yap
+                  {schema.submitLabel}
                 </Button>
               </CardFooter>
               <Divider></Divider>
+
               <CardFooter m={0} p={0}>
                 <Box
                   justifyContent={"center"}
@@ -144,6 +166,7 @@ const Login = () => {
           </FormProvider>
         </Box>
       </Center>
+      ;
     </Flex>
   );
 };

@@ -23,6 +23,8 @@ function LoginForm() {
   const [timeStamp, setTimeStamp] = useState(Date.now());
   const onSubmit = async (data) => {
     setLoading(true);
+    setIsError(false);
+
     const { name, surName, tckn } = data;
     const _iframeSrc = `https://form.jotform.com/230393262424956?userID=${name}-${surName}-${tckn}`;
 
@@ -31,7 +33,6 @@ function LoginForm() {
     );
 
     if (res.data.content.length > 0) {
-      setIsError(false);
       setIfrmVisible(true);
       setIfrmSrc(_iframeSrc);
       setLoading(false);
@@ -54,10 +55,20 @@ function LoginForm() {
     <Box flex alignItems={"center"}>
       <Box flex alignItems="center">
         {isIfrmVisible === false ? (
-          <Box maxWidth={550}>
+          <Box maxWidth={500}>
             <form
               className={styles.loginForm}
-              onSubmit={handleSubmit(onSubmit)}>
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              {isError && (
+                <Alert maxW={500} justifyContent="center" status="error">
+                  <AlertIcon />
+                  <AlertTitle>
+                    Girdiğiniz bilgilerin sisteme erişim yetkisi
+                    bulunmamaktadır.
+                  </AlertTitle>
+                </Alert>
+              )}
               <div>
                 <label htmlFor="name">Görevli Adı :</label>
                 <Input required {...register("name")} />
@@ -70,8 +81,8 @@ function LoginForm() {
                 <label htmlFor="tckn">Görevli TC No :</label>
                 <Input
                   type="number"
-                  minLength={11}
-                  maxLength={11}
+                  min="10000000000"
+                  max="99999999999"
                   required
                   {...register("tckn")}
                 />
@@ -94,16 +105,9 @@ function LoginForm() {
             <iframe
               src={ifrmSrc + "&timestamp=" + timeStamp}
               title="Form"
-              className="iframe"></iframe>
+              className="iframe"
+            ></iframe>
           </Flex>
-        )}
-        {isError && (
-          <Alert maxW={600} justifyContent="center" status="error">
-            <AlertIcon />
-            <AlertTitle>
-              Girdiğiniz bilgilerin sisteme erişim yetkisi bulunmamaktadır.
-            </AlertTitle>
-          </Alert>
         )}
       </Box>
     </Box>

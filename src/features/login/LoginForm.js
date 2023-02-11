@@ -30,7 +30,7 @@ function LoginForm() {
     const _iframeSrc = `https://form.jotform.com/230393262424956?userID=${name}-${surName}-${tckn}`;
 
     const res = await axios.get(
-      `https://api.jotform.com/form/230401567881052/submissions?apiKey=38c1f731467c6e32e36eca2c5c&filter={"q4":${tckn}}`
+      `https://api.jotform.com/form/230401567881052/submissions?apiKey=${process.env.REACT_APP_JF_API_KEY}&filter={"q4":${tckn}}`
     );
 
     if (res.data.content.length > 0) {

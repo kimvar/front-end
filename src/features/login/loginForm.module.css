@@ -1,11 +1,5 @@
-.container {
-  width: 1140px;
-  max-width: 100%;
-  margin: auto;
-}
-
 .loginForm {
-  padding: 40px;
+  padding: 30px 90px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

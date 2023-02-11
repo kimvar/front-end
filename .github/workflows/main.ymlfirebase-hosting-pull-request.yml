@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Add any build steps here. For example:
       - name: "Create env file"
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env

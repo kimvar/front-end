@@ -25,7 +25,7 @@ function EditData() {
 
     try {
       const res = await axios.get(
-        `https://api.jotform.com/form/230393262424956/submissions?apiKey=${process.env.REACT_APP_JF_API_KEY}&filter={"q77":${code}}`
+        `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/enduser?id=${code}`
       );
 
       const { id } = res.data.content[0];

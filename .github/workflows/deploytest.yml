@@ -1,4 +1,4 @@
-name: install ssh and deploy to prod env
+name: install ssh and deploy to test env
 
 on:
   push:

@@ -24,4 +24,4 @@ jobs:
       - name: path settings
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/test-app.afetiletisim.org/httpdocs && yarn build"
       - name: restarting app
-        run: touch /var/www/vhosts/test-app.afetiletisim.org/httpdocs/tmp/restart.txt
+        run: /usr/bin/touch /var/www/vhosts/test-app.afetiletisim.org/httpdocs/tmp/restart.txt

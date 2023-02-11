@@ -17,24 +17,26 @@ const Loadable = (Component) => (props) => {
 };
 
 /* ROUTES */
-const LoginPage = Loadable(lazy(() => import("App")));
+const DataManagement = Loadable(
+  lazy(() => import("features/data-management/DataManagement"))
+);
 const Login = Loadable(lazy(() => import("features/auth/Login")));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <GuestGuard>
-        <LoginPage />
-      </GuestGuard>
+      <AuthGuard>
+        <DataManagement />
+      </AuthGuard>
     ),
   },
   {
     path: "/login",
     element: (
-      <AuthGuard>
+      <GuestGuard>
         <Login />
-      </AuthGuard>
+      </GuestGuard>
     ),
   },
 ]);

@@ -1,0 +1,29 @@
+name: install ssh and deploy to test env
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  ssh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+
+      - name: add key to known_hosts
+        run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
+      - name: fetch with plesk integration
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --fetch -domain test-app.afetiletisim.org -name front-end.git"
+      - name: deploy with plesk integration
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --deploy -domain test-app.afetiletisim.org -name front-end.git"
+      - name: path settings
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/test-app.afetiletisim.org/httpdocs && yarn build"
+      - name: restarting app
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "touch /var/www/vhosts/test-app.afetiletisim.org/httpdocs/tmp/restart.txt"

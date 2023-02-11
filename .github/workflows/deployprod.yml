@@ -2,9 +2,7 @@ name: install ssh and deploy to prod env
 
 on:
   push:
-    branches: [prod]
-  pull_request:
-    branches: [prod]
+    branches: [main]
 
 jobs:
   ssh:
@@ -24,6 +22,6 @@ jobs:
       - name: deploy with plesk integration
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --deploy -domain app.afetiletisim.org -name front-end.git"
       - name: path settings
-        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/app.afetiletisim.org/httpdocs && yarn build"
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/app.afetiletisim.org/httpdocs && yarn && yarn build"
       - name: restarting app
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "touch /var/www/vhosts/app.afetiletisim.org/httpdocs/tmp/restart.txt"

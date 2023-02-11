@@ -1,9 +1,7 @@
-name: install ssh and deploy to test env
+name: install ssh and deploy to develop env
 
 on:
   push:
-    branches: [develop]
-  pull_request:
     branches: [develop]
 
 jobs:
@@ -23,7 +21,7 @@ jobs:
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --fetch -domain test-app.afetiletisim.org -name front-end.git"
       - name: deploy with plesk integration
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --deploy -domain test-app.afetiletisim.org -name front-end.git"
-      - name: path settings
-        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/test-app.afetiletisim.org/httpdocs && yarn build"
+      - name: path & build phase
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "export PATH=/opt/plesk/node/16/bin:$PATH && cd /var/www/vhosts/test-app.afetiletisim.org/httpdocs && yarn && yarn build"
       - name: restarting app
         run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "touch /var/www/vhosts/test-app.afetiletisim.org/httpdocs/tmp/restart.txt"

@@ -58,9 +58,8 @@ const Login = () => {
 
     try {
       const res = await axios.get(
-        `https://api.jotform.com/form/230401567881052/submissions?apiKey=${process.env.REACT_APP_JF_API_KEY}&filter={"q4":${tckn}}`
+        `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/auth?id=${tckn}`
       );
-
       if (res.data.content.length > 0) {
         user.handleLogin(data);
       } else {

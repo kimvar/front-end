@@ -78,7 +78,7 @@ const Login = () => {
       alignItems="center"
     >
       <Center>
-        <Box width={"100%"} maxW={{ base: "100px", md: "400px" }}>
+        <Box width={"100%"} minW="400px" maxW={{ base: "100px", md: "400px" }}>
           <Card p={2} borderRadius="lg">
             <CardHeader>
               <Center>
@@ -142,7 +142,6 @@ const Login = () => {
           </Card>
         </Box>
       </Center>
-      ;
     </Flex>
   );
 };

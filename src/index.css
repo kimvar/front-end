@@ -1,6 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
-body {
-  padding: 0;
-  margin: 0;
+.iframe {
+  width: 100%;
+  height: calc(100vh - 180px);
+}
+
+.chakra-tabs__tab-panel,
+.chakra-tabs__tab-panels {
+  outline: 0 !important;
 }

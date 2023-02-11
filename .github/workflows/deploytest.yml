@@ -20,8 +20,8 @@ jobs:
       - name: add key to known_hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
       - name: fetch with plesk integration
-        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --fetch -domain test-app.afetiletisim.org -name front-end.git"
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "plesk ext git --fetch -domain test-app.afetiletisim.org -name front-end.git && export PATH=/opt/plesk/node/16/bin:$PATH"
       - name: path settings
-        run: export PATH=/opt/plesk/node/16/bin:$PATH && yarn build
+        run: ssh -p ${{ secrets.SSH_PORT}} root@${{ secrets.SSH_HOST }} "yarn build"
       - name: restarting app
         run: touch /var/www/vhosts/app.afetiletisim.org/httpdocs/tmp/restart.txt

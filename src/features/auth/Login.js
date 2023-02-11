@@ -20,70 +20,50 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormRenderer } from "components/HookForms/FormRenderer";
 
+const formSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required("E-posta alanı zorunludur.")
+    .email("Lütfen geçerli bir email adresi giriniz."),
+  password: yup
+    .string()
+    .min(6, "Parola en az 6 karakter oluşmalıdır.")
+    .required("Parola alanı zorunludur."),
+});
+
 const schema = {
-  submitLabel: "Giriş Yap",
   id: "login-form",
   fields: [
     {
+      component: "input",
       name: "email",
       label: "E-posta adresiniz",
       placeholder: "E-posta adresiniz",
-      component: "input",
     },
     {
+      component: "input",
       name: "password",
       label: "Parolanız",
       placeholder: "Parolanız",
       type: "password",
-      component: "input",
-    },
-    {
-      name: "test",
-      label: "Test",
-      placeholder: "Test",
-      component: "select",
-      options: [
-        {
-          title: "Option 1",
-          value: 1,
-        },
-        {
-          title: "Option 2",
-          value: 2,
-        },
-        {
-          title: "Option 3",
-          value: 3,
-        },
-      ],
     },
   ],
 };
 
 const Login = () => {
-  const formScheme = yup.object().shape({
-    email: yup
-      .string()
-      .required("E-posta alanı zorunludur.")
-      .email("Lütfen geçerli bir email adresi giriniz."),
-    password: yup
-      .string()
-      .min(6, "Parola en az 6 karakter oluşmalıdır.")
-      .required("Parola alanı zorunludur."),
-  });
-
   const methods = useForm({
-    resolver: yupResolver(formScheme),
+    resolver: yupResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      email2: "",
+      email3: "",
     },
   });
 
   const { reset } = methods;
 
   const onSubmit = (data) => {
-    console.log(data);
     reset();
   };
 
@@ -98,7 +78,7 @@ const Login = () => {
       alignItems="center"
     >
       <Center>
-        <Box minW={{ base: "90%", md: "408px" }}>
+        <Box width={"100%"} maxW={{ base: "100px", md: "400px" }}>
           <Card p={2} borderRadius="lg">
             <CardHeader>
               <Center>
@@ -125,7 +105,7 @@ const Login = () => {
                 variant="solid"
                 width="full"
               >
-                {schema.submitLabel}
+                Giriş Yap
               </Button>
             </CardFooter>
             <Divider></Divider>

@@ -7,7 +7,12 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-export default function FormInput({ name, disabled = false, title, ...other }) {
+export default function FormSelect({
+  name,
+  disabled = false,
+  title,
+  ...other
+}) {
   const { control } = useFormContext();
 
   return (

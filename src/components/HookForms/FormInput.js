@@ -9,24 +9,20 @@ import {
 
 export default function FormInput({ name, label, type = "text" }) {
   const { control } = useFormContext();
-
   return (
     <Controller
       name={name}
-      defaultValue={""}
       control={control}
       render={({ field, fieldState: { error } }) => (
-        <>
-          <FormControl isInvalid={error}>
-            <FormLabel htmlFor={name}>
-              <Text fontSize="xs">{label}</Text>
-            </FormLabel>
-            <Input id={name} {...field} type={type} />
-            <FormErrorMessage>
-              {error && <Text fontSize={"sx"}>{error.message}</Text>}
-            </FormErrorMessage>
-          </FormControl>
-        </>
+        <FormControl isInvalid={error}>
+          <FormLabel htmlFor={name}>
+            <Text fontSize="xs">{label}</Text>
+          </FormLabel>
+          <Input id={name} {...field} type={type} />
+          <FormErrorMessage>
+            {error && <Text fontSize={"sx"}>{error.message}</Text>}
+          </FormErrorMessage>
+        </FormControl>
       )}
     />
   );

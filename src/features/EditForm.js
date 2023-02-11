@@ -25,7 +25,7 @@ function EditForm() {
 
     try {
       const res = await axios.get(
-        `https://api.jotform.com/form/230393262424956/submissions?apiKey=38c1f731467c6e32e36eca2c5c&filter={"q77":${code}}`
+        `https://api.jotform.com/form/230393262424956/submissions?apiKey==${process.env.REACT_APP_JF_API_KEY}&filter={"q77":${code}}`
       );
 
       const { id } = res.data.content[0];

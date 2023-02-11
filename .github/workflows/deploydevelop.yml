@@ -2,9 +2,9 @@ name: install ssh and deploy to test env
 
 on:
   push:
-    branches: [test]
+    branches: [develop]
   pull_request:
-    branches: [test]
+    branches: [develop]
 
 jobs:
   ssh:

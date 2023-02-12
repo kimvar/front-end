@@ -19,6 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormRenderer } from "components/HookForms/FormRenderer";
 import { tcknQuery, user } from "utils";
+import { PERMISSIONS } from "@constants";
 import axios from "axios";
 import ErrorMessage from "components/ErrorMessage";
 
@@ -61,7 +62,23 @@ const Login = () => {
         `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/auth?id=${tckn}`
       );
       if (res.data.content.length > 0) {
-        user.handleLogin(data);
+        let permissions = [];
+
+        const talepOlusturabilir = res.data.content[0].answers["14"];
+        const kisiSorgulayabilir = res.data.content[0].answers["15"];
+        const veriGirebilir = res.data.content[0].answers["16"];
+
+        if (talepOlusturabilir.answer === "1") {
+          permissions.push(PERMISSIONS.TALEP_OLUSTURABILIR);
+        }
+        if (kisiSorgulayabilir.answer === "1") {
+          permissions.push(PERMISSIONS.KISI_SORGULAYABILIR);
+        }
+        if (veriGirebilir.answer === "1") {
+          permissions.push(PERMISSIONS.VERI_GIREBILIR);
+        }
+
+        user.handleLogin({ ...data, permissions });
       } else {
         setErrorMessage(
           "Girdiğiniz bilgilerin sisteme erişim yetkisi bulunmamaktadır."

@@ -13,6 +13,9 @@ export const user = {
       window.location.href = "/login";
     }, 100);
   },
+  hasPermission: function (val) {
+    return this.credantials?.permissions?.includes(val);
+  },
 };
 
 export const tcknQuery = (tckn) => {

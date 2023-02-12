@@ -29,13 +29,11 @@ const mainRoot = () => {
   switch (true) {
     case user.orgBasedPermission("Kızılay"):
       return <Kizilay />;
-    case user.orgBasedPermission("Diğer"):
-      return <DataManagement />;
     case user.orgBasedPermission("Aile"):
       return <Family />;
 
     default:
-      return <></>;
+      return <DataManagement />;
   }
 };
 

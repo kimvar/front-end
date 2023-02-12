@@ -5,8 +5,9 @@ import {
   Image,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FiUsers } from "react-icons/fi";
+import { FiUser, FiFileText } from "react-icons/fi";
 import { user } from "utils";
+import { PERMISSIONS } from "@constants";
 
 import NavItem from "./NavItem";
 
@@ -14,22 +15,15 @@ const SidebarContent = ({ onClose, ...rest }) => {
   const linkItems = [
     {
       name: "Veri Yönetimi",
-      icon: FiUsers,
-      to: "/",
-      show:
-        !user.orgBasedPermission("Aile") && !user.orgBasedPermission("Kızılay"),
+      icon: FiFileText,
+      to: "/data-management",
+      show: user.hasPermission(PERMISSIONS.VERI_GIREBILIR),
     },
     {
-      name: "Aile ve Sosyal Hizmetler Kişi Sorgulama",
-      icon: FiUsers,
-      to: "/",
-      show: user.orgBasedPermission("Aile"),
-    },
-    {
-      name: "Kızılay Kişi Sorgulama",
-      icon: FiUsers,
-      to: "/",
-      show: user.orgBasedPermission("Kızılay"),
+      name: "Kişi Sorgulama",
+      icon: FiUser,
+      to: "/person-questioning",
+      show: user.hasPermission(PERMISSIONS.KISI_SORGULAYABILIR),
     },
   ];
 

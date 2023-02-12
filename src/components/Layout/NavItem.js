@@ -1,12 +1,22 @@
 import { Flex, Link, Icon } from "@chakra-ui/react";
-import { Link as ReachLink } from "react-router-dom";
+import { Link as ReachLink, useLocation } from "react-router-dom";
+
+const activeStyles = {
+  color: "green",
+  borderColor: "green",
+};
 
 const NavItem = ({ icon, children, to, ...rest }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
     <Link
       as={ReachLink}
       to={to}
-      style={{ textDecoration: "none" }}
+      style={{
+        textDecoration: "none",
+      }}
       _focus={{ boxShadow: "none" }}
     >
       <Flex
@@ -17,8 +27,12 @@ const NavItem = ({ icon, children, to, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
-          color: "white",
+          bg: "green.100",
+          color: "green.900",
+        }}
+        style={{
+          border: "1px solid transparent",
+          ...(isActive && activeStyles),
         }}
         {...rest}
       >
@@ -27,7 +41,7 @@ const NavItem = ({ icon, children, to, ...rest }) => {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: "white",
+              color: "green.900",
             }}
             as={icon}
           />

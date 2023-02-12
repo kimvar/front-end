@@ -23,7 +23,7 @@ const formSchema = yup.object().shape({
     ),
 });
 
-const Kizilay = () => {
+const PersonQuestioning = () => {
   const [submissionData, setSubmissionData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -89,7 +89,7 @@ const Kizilay = () => {
   };
 
   const schema = {
-    id: "kizilay-form",
+    id: "person-form",
     onSubmit: handleSubmit(onSubmit),
     fields: [
       {
@@ -111,13 +111,13 @@ const Kizilay = () => {
               <FormRenderer schema={schema}></FormRenderer>
             </FormProvider>
             <Button
-              form="kizilay-form"
+              form="person-form"
               type="submit"
               colorScheme="blue"
               isLoading={isLoading}
               loadingText="Yükleniyor..."
             >
-              Düzenle
+              Göster
             </Button>
           </Flex>
         </>
@@ -138,4 +138,4 @@ const Kizilay = () => {
   );
 };
 
-export default Kizilay;
+export default PersonQuestioning;

@@ -13,9 +13,6 @@ export const user = {
       window.location.href = "/login";
     }, 100);
   },
-  orgBasedPermission: function (val) {
-    return this.credantials?.organization?.includes(val);
-  },
 };
 
 export const tcknQuery = (tckn) => {

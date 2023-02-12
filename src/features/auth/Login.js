@@ -61,7 +61,8 @@ const Login = () => {
         `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/auth?id=${tckn}`
       );
       if (res.data.content.length > 0) {
-        const organization = res.data.content[0].answers["13"].answer;
+        const organization =
+          res.data.content[0].answers["13"].answer || "Diğer";
         user.handleLogin({ ...data, organization });
       } else {
         setErrorMessage(

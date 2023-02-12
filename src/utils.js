@@ -13,8 +13,8 @@ export const user = {
       window.location.href = "/login";
     }, 100);
   },
-  orgBasedPermission: function (val) {
-    return this.credantials?.organization?.includes(val);
+  hasPermission: function (val) {
+    return this.credantials?.permissions?.includes(val);
   },
 };
 

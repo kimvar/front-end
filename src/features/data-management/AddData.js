@@ -23,8 +23,7 @@ function AddData() {
           <iframe
             src={iframeSrc + "&timestamp=" + timeStamp}
             title="Form"
-            className="iframe"
-          ></iframe>
+            className="iframe"></iframe>
         </Flex>
       </Box>
     </Box>

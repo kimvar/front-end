@@ -16,7 +16,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
       name: "Veri Yönetimi",
       icon: FiUsers,
       to: "/",
-      show: user.orgBasedPermission("Diğer"),
+      show:
+        !user.orgBasedPermission("Aile") && !user.orgBasedPermission("Kızılay"),
     },
     {
       name: "Aile ve Sosyal Hizmetler Kişi Sorgulama",

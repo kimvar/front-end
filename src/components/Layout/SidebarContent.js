@@ -6,11 +6,31 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiUsers } from "react-icons/fi";
+import { user } from "utils";
 
 import NavItem from "./NavItem";
 
 const SidebarContent = ({ onClose, ...rest }) => {
-  const linkItems = [{ name: "Veri Yönetimi", icon: FiUsers, to: "/" }];
+  const linkItems = [
+    {
+      name: "Veri Yönetimi",
+      icon: FiUsers,
+      to: "/",
+      show: user.orgBasedPermission("Diğer"),
+    },
+    {
+      name: "Aile ve Sosyal Hizmetler Kişi Sorgulama",
+      icon: FiUsers,
+      to: "/",
+      show: user.orgBasedPermission("Aile"),
+    },
+    {
+      name: "Kızılay Kişi Sorgulama",
+      icon: FiUsers,
+      to: "/",
+      show: user.orgBasedPermission("Kızılay"),
+    },
+  ];
 
   return (
     <Box
@@ -31,16 +51,18 @@ const SidebarContent = ({ onClose, ...rest }) => {
         />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {linkItems.map((link) => (
-        <NavItem
-          key={link.name}
-          icon={link.icon}
-          to={link.to}
-          onClick={onClose}
-        >
-          {link.name}
-        </NavItem>
-      ))}
+      {linkItems
+        .filter((link) => link.show)
+        .map((link) => (
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            to={link.to}
+            onClick={onClose}
+          >
+            {link.name}
+          </NavItem>
+        ))}
     </Box>
   );
 };

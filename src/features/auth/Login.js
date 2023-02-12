@@ -61,7 +61,8 @@ const Login = () => {
         `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/auth?id=${tckn}`
       );
       if (res.data.content.length > 0) {
-        user.handleLogin(data);
+        const organization = res.data.content[0].answers["13"].answer;
+        user.handleLogin({ ...data, organization });
       } else {
         setErrorMessage(
           "Girdiğiniz bilgilerin sisteme erişim yetkisi bulunmamaktadır."

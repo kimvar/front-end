@@ -29,9 +29,8 @@ const firebaseConfig = {
   measurementId: "G-R1C261371H",
 };
 
-const app = initializeApp(firebaseConfig);
-
-if (process.env.NODE_ENV === "PRODUCTION") {
+if (process.env.NODE_ENV === "production") {
+  const app = initializeApp(firebaseConfig);
   getAnalytics(app);
 }
 

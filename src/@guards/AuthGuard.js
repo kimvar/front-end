@@ -3,7 +3,8 @@ import { Navigate } from "react-router-dom";
 import { user } from "utils";
 
 const AuthGuard = ({ children }) => {
-  if (!user.isLoggedIn) {
+  // TODO: remove permissions check after a while
+  if (!user.isLoggedIn || !user.credantials?.permissions) {
     return <Navigate to="/login" />;
   }
 

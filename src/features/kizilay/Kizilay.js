@@ -128,7 +128,7 @@ const Kizilay = () => {
             <React.Fragment key={i}>
               <Box w="100%" mb={2}>
                 <b>{item.text}: </b>
-                <span>{item.answer || "-"}</span>
+                <span>{item.prettyFormat || item.answer || "-"}</span>
               </Box>
               <Divider mb={2} />
             </React.Fragment>

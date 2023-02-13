@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Box, Flex, Button } from "@chakra-ui/react";
 import {
+  Box,
+  Flex,
+  Button,
   Table,
   Thead,
   Tbody,
@@ -8,7 +10,6 @@ import {
   Th,
   Td,
   TableContainer,
-  useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { FormProvider, useForm } from "react-hook-form";
@@ -19,7 +20,7 @@ import { format as dateFormat } from "date-fns";
 import Layout from "components/Layout";
 import ErrorMessage from "components/ErrorMessage";
 import { FormRenderer } from "components/HookForms/FormRenderer";
-import { tcknQuery } from "utils";
+import { tcknQuery, user } from "utils";
 import CustomModal from "components/CustomModal";
 
 function RequestList() {
@@ -27,7 +28,9 @@ function RequestList() {
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentItem, setCurrentItem] = useState({});
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [currentEndUser, setCurrentEndUser] = useState(null);
+  const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
 
   const formSchema = yup.object().shape({
     tckn: yup
@@ -53,8 +56,31 @@ function RequestList() {
     setLoading(true);
     setErrorMessage(null);
     setRequestData([]);
+    setCurrentEndUser(null);
 
     try {
+      const endUserRes = await axios.get(
+        `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/enduser?id=${tckn}`
+      );
+      const endUserContent = endUserRes.data.content[0];
+
+      if (!endUserRes.data.content[0]) {
+        setErrorMessage(
+          "Talep sorgulama/ekleme yapabilmek için öncelikle kişiyi sisteme eklemeniz gerekmektedir."
+        );
+        return;
+      }
+
+      const obj = {
+        name: endUserContent.answers[76].answer?.first || "-",
+        lastname: endUserContent.answers[76].answer?.last || "-",
+        district: endUserContent.answers[284].answer || "-",
+        phone: endUserContent.answers[21].answer || "-",
+        tckn,
+      };
+
+      setCurrentEndUser(obj);
+
       const res = await axios(
         `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/list-requests?id=${tckn}`
       );
@@ -86,7 +112,7 @@ function RequestList() {
   };
 
   const handleDetails = (item) => {
-    onOpen();
+    setDetailsModalOpen(true);
     setCurrentItem(item);
   };
 
@@ -95,24 +121,55 @@ function RequestList() {
       <Box flex alignItems="center">
         <ErrorMessage message={errorMessage} />
         <>
-          <Flex flexDirection="column" gap={15} maxWidth={500}>
-            <FormProvider {...methods}>
-              <FormRenderer schema={schema}></FormRenderer>
-            </FormProvider>
-            <Button
-              form="request-form"
-              type="submit"
-              colorScheme="blue"
-              isLoading={isLoading}
-              loadingText="Yükleniyor...">
-              Göster
-            </Button>
+          <Flex justifyContent="space-between">
+            <Flex flexDirection="column" gap={15} w={500}>
+              <FormProvider {...methods}>
+                <FormRenderer schema={schema}></FormRenderer>
+              </FormProvider>
+              <Button
+                form="request-form"
+                type="submit"
+                colorScheme="blue"
+                isLoading={isLoading}
+                loadingText="Yükleniyor..."
+              >
+                Göster
+              </Button>
+            </Flex>
+            {currentEndUser && (
+              <Button
+                type="button"
+                colorScheme="green"
+                onClick={() => setAddModalOpen(true)}
+              >
+                Talep Ekle
+              </Button>
+            )}
           </Flex>
         </>
       </Box>
+      {currentEndUser && (
+        <Box shadow="dark-lg" mt={5} p={3}>
+          <h4>
+            <div>
+              <b>Ad Soyad : </b>
+              <span>
+                {currentEndUser.name} {currentEndUser.lastname}
+              </span>
+            </div>
+            <div>
+              <b>Yerleştiği İlçe : </b> <span>{currentEndUser.district}</span>
+            </div>
+            <div>
+              <b>Telefon : </b>
+              <span>{currentEndUser.phone}</span>
+            </div>
+          </h4>
+        </Box>
+      )}
       {requestData.length > 0 && (
-        <TableContainer mt="10">
-          <Table variant="simple">
+        <TableContainer mt="5">
+          <Table variant="simple" style={{ whiteSpace: "normal" }}>
             <Thead>
               <Tr>
                 <Th>#</Th>
@@ -147,8 +204,10 @@ function RequestList() {
                     <Td>{item.answers[4].answer || "-"}</Td>
                     <Td>
                       <Button
+                        type="button"
                         onClick={() => handleDetails(item)}
-                        colorScheme="blue">
+                        colorScheme="blue"
+                      >
                         Detay
                       </Button>
                     </Td>
@@ -160,11 +219,27 @@ function RequestList() {
         </TableContainer>
       )}
       <CustomModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isDetailsModalOpen}
+        onClose={() => setDetailsModalOpen(false)}
         title={"Talep Detay"}
-        size="2xl">
+        size="5xl"
+      >
         {currentItem.answers ? currentItem.answers[5].answer : ""}
+      </CustomModal>
+      <CustomModal
+        isOpen={isAddModalOpen}
+        onClose={() => setAddModalOpen(false)}
+        title={"Talep Ekle"}
+        size="5xl"
+      >
+        {currentEndUser && (
+          <iframe
+            style={{ width: "100%", height: "calc(100vh - 120px)" }}
+            src={`https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/add-request?talepSahibiAdSoyad=${currentEndUser.name}-${currentEndUser.lastname}&talepSahibiTcKimlik=${currentEndUser.tckn}&talepKarsilayanKisiAdSoyad=${user.credantials.name}-${user.credantials.lastname}&talepKarsilayanKisiTcKimlik=${user.credantials.tckn}`}
+            frameBorder="0"
+            title="Talep Form"
+          ></iframe>
+        )}
       </CustomModal>
     </Layout>
   );

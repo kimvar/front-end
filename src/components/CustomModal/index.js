@@ -5,16 +5,19 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  Box,
 } from "@chakra-ui/react";
 
 function CustomModal({ isOpen, onClose, title, children, size }) {
   return (
     <Modal size={size} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt={4}>
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>{children}</ModalBody>
+        <ModalBody>
+          <Box minH="calc(100vh - var(--chakra-space-28))">{children}</Box>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

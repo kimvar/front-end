@@ -149,21 +149,18 @@ function RequestList() {
         </>
       </Box>
       {currentEndUser && (
-        <Box shadow="dark-lg" mt={5} p={3}>
+        <Box mt={5}>
+          <div style={{ marginBottom: 5, color: "gray" }}>
+            Sorgulanan Kişi Bilgisi
+          </div>
           <h4>
-            <div>
-              <b>Ad Soyad : </b>
-              <span>
-                {currentEndUser.name} {currentEndUser.lastname}
-              </span>
-            </div>
-            <div>
-              <b>Yerleştiği İlçe : </b> <span>{currentEndUser.district}</span>
-            </div>
-            <div>
-              <b>Telefon : </b>
-              <span>{currentEndUser.phone}</span>
-            </div>
+            <b>Ad Soyad : </b>
+            <span>
+              {currentEndUser.name} {currentEndUser.lastname}
+            </span>{" "}
+            <b>Yerleştiği İlçe : </b> <span>{currentEndUser.district}</span>{" "}
+            <b>Telefon : </b>
+            <span>{currentEndUser.phone}</span>
           </h4>
         </Box>
       )}
@@ -172,7 +169,6 @@ function RequestList() {
           <Table variant="simple" style={{ whiteSpace: "normal" }}>
             <Thead>
               <Tr>
-                <Th>#</Th>
                 <Th>Oluşturma Tarihi</Th>
                 <Th>Talebi Hangi Kurum Karşılıyor</Th>
                 <Th>Talep Sahibi</Th>
@@ -188,7 +184,6 @@ function RequestList() {
               {requestData.map((item) => {
                 return (
                   <Tr key={item.id}>
-                    <Td>{item.id}</Td>
                     <Td>
                       {dateFormat(
                         new Date(item.created_at),
@@ -222,7 +217,7 @@ function RequestList() {
         isOpen={isDetailsModalOpen}
         onClose={() => setDetailsModalOpen(false)}
         title={"Talep Detay"}
-        size="5xl"
+        size="2xl"
       >
         {currentItem.answers ? currentItem.answers[5].answer : ""}
       </CustomModal>

@@ -75,7 +75,7 @@ const router = createBrowserRouter([
     path: "request-list",
     element: (
       <AuthGuard>
-        <PermissionGuard has={PERMISSIONS.KISI_SORGULAYABILIR}>
+        <PermissionGuard has={PERMISSIONS.TALEP_OLUSTURABILIR}>
           <RequestList />
         </PermissionGuard>
       </AuthGuard>

@@ -52,6 +52,7 @@ function RequestList() {
   const getRequest = async (tckn) => {
     setLoading(true);
     setErrorMessage(null);
+    setRequestData([]);
 
     try {
       const res = await axios(
@@ -62,7 +63,6 @@ function RequestList() {
       setRequestData(content);
     } catch (error) {
       setErrorMessage("Beklenmedik bir hata oluştu");
-      setRequestData(null);
     } finally {
       setLoading(false);
     }
@@ -73,7 +73,7 @@ function RequestList() {
   };
 
   const schema = {
-    id: "person-form",
+    id: "request-form",
     onSubmit: handleSubmit(onSubmit),
     fields: [
       {
@@ -100,7 +100,7 @@ function RequestList() {
               <FormRenderer schema={schema}></FormRenderer>
             </FormProvider>
             <Button
-              form="person-form"
+              form="request-form"
               type="submit"
               colorScheme="blue"
               isLoading={isLoading}

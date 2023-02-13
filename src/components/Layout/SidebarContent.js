@@ -29,7 +29,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       name: "Talep Sorgulama",
       icon: FiUser,
       to: "/request-list",
-      show: user.hasPermission(PERMISSIONS.KISI_SORGULAYABILIR),
+      show: user.hasPermission(PERMISSIONS.TALEP_OLUSTURABILIR),
     },
   ];
 

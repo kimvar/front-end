@@ -25,8 +25,7 @@ export default function Layout({ children }) {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
-      >
+        size="full">
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
@@ -36,8 +35,7 @@ export default function Layout({ children }) {
         ml={{ base: 0, md: 60 }}
         p="4"
         backgroundColor={"#fff"}
-        height="100vh"
-      >
+        height="100vh">
         {children}
       </Box>
     </Box>

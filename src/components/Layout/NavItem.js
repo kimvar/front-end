@@ -17,12 +17,12 @@ const NavItem = ({ icon, children, to, ...rest }) => {
       style={{
         textDecoration: "none",
       }}
-      _focus={{ boxShadow: "none" }}
-    >
+      _focus={{ boxShadow: "none" }}>
       <Flex
         align="center"
         p="4"
         mx="4"
+        my="2"
         borderRadius="lg"
         role="group"
         cursor="pointer"
@@ -34,8 +34,7 @@ const NavItem = ({ icon, children, to, ...rest }) => {
           border: "1px solid transparent",
           ...(isActive && activeStyles),
         }}
-        {...rest}
-      >
+        {...rest}>
         {icon && (
           <Icon
             mr="4"

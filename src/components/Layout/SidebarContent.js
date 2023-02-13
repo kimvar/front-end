@@ -25,6 +25,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
       to: "/person-questioning",
       show: user.hasPermission(PERMISSIONS.KISI_SORGULAYABILIR),
     },
+    {
+      name: "Talep Sorgulama",
+      icon: FiUser,
+      to: "/request-list",
+      show: user.hasPermission(PERMISSIONS.KISI_SORGULAYABILIR),
+    },
   ];
 
   return (
@@ -36,8 +42,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}
-    >
+      {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Image
           src="assets/images/logo.png"
@@ -53,8 +58,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
             key={link.name}
             icon={link.icon}
             to={link.to}
-            onClick={onClose}
-          >
+            onClick={onClose}>
             {link.name}
           </NavItem>
         ))}

@@ -5,12 +5,16 @@ import FormSelect from "components/HookForms/FormSelect";
 import { Box } from "@chakra-ui/react";
 import RowInput from "./RowInput";
 import SectionInput from "./SectionInput";
+import FormCheckbox from "./FormCheckbox";
+import FormRadio from "./FormRadio";
 
 const elements = {
   input: FormInput,
   select: FormSelect,
   row: RowInput,
   section: SectionInput,
+  checkbox: FormCheckbox,
+  radio: FormRadio,
 };
 const InputRenderer = ({ field }) => {
   const Component = elements[field.component];

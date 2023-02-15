@@ -1,3 +1,24 @@
+/**
+ * Usage
+{
+  component: "row",
+  name: 'row',
+  fields: [
+    {
+      component: "input",
+      name: "name",
+      label: "Görevli Ad",
+      placeholder: "Görevli Ad Soyad",
+    },
+    {
+      component: "input",
+      name: "lastname",
+      label: "Görevli Soyad",
+      placeholder: "Görevli Ad Soyad",
+    },
+  ],
+},
+ */
 import { Flex } from "@chakra-ui/react";
 import { InputRenderer } from "./InputRenderer";
 

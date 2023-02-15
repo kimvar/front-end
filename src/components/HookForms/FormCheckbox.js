@@ -1,29 +1,30 @@
 /**
 {
-      component: "input",
-      name: "name",
-      label: "Görevli Ad",
-      placeholder: "Görevli Ad Soyad",
-    }
+  component: "checkbox",
+  name: "user",
+  label: "Görevli Ad",
+  title: "Görevli",
+},
 */
 
 import { useFormContext, Controller } from "react-hook-form";
 import {
-  Input,
   Text,
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Checkbox,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-function FormInput({ name, label, type = "text" }) {
-  if (!name || !label) {
+function FormCheckbox({ name, label = null, title = null }) {
+  const { control } = useFormContext();
+  if (!name) {
     throw new Error(
-      "name and label required on input type. [Can's Tiny Data Driven Form Builder]"
+      "name is required in form checkbox type.[Can's Tiny Data Driven Form Builder]"
     );
   }
-  const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
@@ -33,7 +34,9 @@ function FormInput({ name, label, type = "text" }) {
           <FormLabel htmlFor={name}>
             <Text fontSize="xs">{label}</Text>
           </FormLabel>
-          <Input id={name} {...field} type={type} />
+          <Checkbox size="md" colorScheme="green" {...field}>
+            {title}
+          </Checkbox>
           <FormErrorMessage>
             {error && <Text fontSize={"sx"}>{error.message}</Text>}
           </FormErrorMessage>
@@ -43,10 +46,10 @@ function FormInput({ name, label, type = "text" }) {
   );
 }
 
-FormInput.propTypes = {
+FormCheckbox.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  type: PropTypes.string,
+  title: PropTypes.array.isRequired,
 };
 
-export default FormInput;
+export default FormCheckbox;

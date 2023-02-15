@@ -1,3 +1,24 @@
+/**
+ * Usage
+  {
+    component: "select",
+    name: "genre",
+    defaultOption: {
+      value: "0",
+      title: "Please Select",
+    },
+    options: [
+      {
+        value: "female",
+        title: "Female",
+      },
+      {
+        value: "male",
+        title: "Male",
+      },
+    ],
+  },
+ */
 import { useFormContext, Controller } from "react-hook-form";
 import {
   Text,
@@ -6,15 +27,34 @@ import {
   FormErrorMessage,
   Select,
 } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
-export default function FormSelect({
+function FormSelect({
   name,
+  value,
   disabled = false,
-  title,
+  options = [],
+  defaultOption = null,
   ...other
 }) {
-  const { control } = useFormContext();
+  if (!name || !value) {
+    throw new Error(
+      "name, and value are required in form select type. [Can's Tiny Data Driven Form Builder]"
+    );
+  }
 
+  const { control } = useFormContext();
+  if (!name || !value) {
+    throw new Error(
+      "name and value are required in form select type. [Can's Tiny Data Driven Form Builder]"
+    );
+  }
+
+  if (options.length === 0) {
+    throw new Error(
+      "options are required in select type. [Can's Tiny Data Driven Form Builder]"
+    );
+  }
   return (
     <Controller
       name={name}
@@ -26,14 +66,13 @@ export default function FormSelect({
             <FormLabel htmlFor={name}>
               <Text fontSize="xs">{other.label}</Text>
             </FormLabel>
-            <Select
-              title="test"
-              id={name}
-              disabled={disabled}
-              {...field}
-              {...other}
-            >
-              {other.options.map((option, index) => {
+            <Select id={name} disabled={disabled} {...field}>
+              {defaultOption && (
+                <option value={defaultOption.value}>
+                  {defaultOption.title}
+                </option>
+              )}
+              {options.map((option, index) => {
                 return (
                   <option key={index} value={option.value}>
                     {option.title}
@@ -50,3 +89,11 @@ export default function FormSelect({
     />
   );
 }
+
+FormSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+};
+
+export default FormSelect;

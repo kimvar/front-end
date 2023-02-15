@@ -29,8 +29,10 @@ function RequestList() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [currentItem, setCurrentItem] = useState({});
   const [currentEndUser, setCurrentEndUser] = useState(null);
+  const [currentSubmissionId, setCurrentSubmissionId] = useState(null);
   const [isDetailsModalOpen, setDetailsModalOpen] = useState(false);
   const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const formSchema = yup.object().shape({
     tckn: yup
@@ -116,6 +118,11 @@ function RequestList() {
     setCurrentItem(item);
   };
 
+  const handleEdit = (submissionId) => {
+    setCurrentSubmissionId(submissionId);
+    setEditModalOpen(true);
+  };
+
   return (
     <Layout>
       <Box flex alignItems="center">
@@ -177,6 +184,7 @@ function RequestList() {
                 <Th>Talep Karşılama Kaydını Oluşturan Kişi Tc Kimlik</Th>
                 <Th>Talep Karşılama Kaydını Oluşturan Kişi Ad Soyad</Th>
                 <Th>Tanım</Th>
+                <Th>Durum</Th>
                 <Th></Th>
               </Tr>
             </Thead>
@@ -197,14 +205,26 @@ function RequestList() {
                     <Td>{item.answers[8].answer || "-"}</Td>
                     <Td>{item.answers[10].answer || "-"}</Td>
                     <Td>{item.answers[4].answer || "-"}</Td>
+                    <Td>{item.answers[12].answer || "-"}</Td>
                     <Td>
-                      <Button
-                        type="button"
-                        onClick={() => handleDetails(item)}
-                        colorScheme="blue"
-                      >
-                        Detay
-                      </Button>
+                      <Flex gap={2}>
+                        <Button
+                          type="button"
+                          onClick={() => handleEdit(item.id)}
+                          colorScheme="yellow"
+                          size="sm"
+                        >
+                          Düzenle
+                        </Button>
+                        <Button
+                          type="button"
+                          onClick={() => handleDetails(item)}
+                          colorScheme="blue"
+                          size="sm"
+                        >
+                          Detay
+                        </Button>
+                      </Flex>
                     </Td>
                   </Tr>
                 );
@@ -233,6 +253,21 @@ function RequestList() {
             src={`https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/add-request?talepSahibiAdSoyad=${currentEndUser.name}-${currentEndUser.lastname}&talepSahibiTcKimlik=${currentEndUser.tckn}&talepKarsilayanKisiAdSoyad=${user.credantials.name}-${user.credantials.lastname}&talepKarsilayanKisiTcKimlik=${user.credantials.tckn}`}
             frameBorder="0"
             title="Talep Form"
+          ></iframe>
+        )}
+      </CustomModal>
+      <CustomModal
+        isOpen={isEditModalOpen}
+        onClose={() => setEditModalOpen(false)}
+        title={"Talep Düzenle"}
+        size="5xl"
+      >
+        {currentEndUser && (
+          <iframe
+            style={{ width: "100%", height: "calc(100vh - 120px)" }}
+            src={`https://jotform.com/edit/${currentSubmissionId}`}
+            frameBorder="0"
+            title="Talep Düzenle Form"
           ></iframe>
         )}
       </CustomModal>

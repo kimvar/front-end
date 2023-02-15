@@ -28,6 +28,10 @@ const DataManagement = Loadable(
 const PersonQuestioning = Loadable(
   lazy(() => import("features/person-questioning/PersonQuestioning"))
 );
+const RequestList = Loadable(
+  lazy(() => import("features/request-list/RequestList"))
+);
+
 const Login = Loadable(lazy(() => import("features/auth/Login")));
 
 const router = createBrowserRouter([
@@ -63,6 +67,16 @@ const router = createBrowserRouter([
       <AuthGuard>
         <PermissionGuard has={PERMISSIONS.KISI_SORGULAYABILIR}>
           <PersonQuestioning />
+        </PermissionGuard>
+      </AuthGuard>
+    ),
+  },
+  {
+    path: "request-list",
+    element: (
+      <AuthGuard>
+        <PermissionGuard has={PERMISSIONS.TALEP_OLUSTURABILIR}>
+          <RequestList />
         </PermissionGuard>
       </AuthGuard>
     ),

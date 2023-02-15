@@ -1,5 +1,5 @@
 /**
- * Usage
+ ** Form Row Element
 {
   component: "row",
   name: 'row',

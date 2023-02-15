@@ -1,3 +1,11 @@
+/**
+ ** Custom Form Element
+  {
+    component: "custom",
+    as: CustomComponent,
+  },
+ */
+
 import FormInput from "components/HookForms/FormInput";
 
 import FormSelect from "components/HookForms/FormSelect";
@@ -16,14 +24,21 @@ const elements = {
   checkbox: FormCheckbox,
   radio: FormRadio,
 };
-const InputRenderer = ({ field }) => {
-  const Component = elements[field.component];
+
+const InputRenderer = ({ field: { component, as, ...rest } }) => {
+  let Component;
+  if (component === "custom") {
+    Component = as;
+  } else {
+    Component = elements[component];
+  }
+
   if (!Component) {
-    throw Error("Component type is invalid! " + field.component);
+    throw Error("Component type is invalid! " + component);
   }
   return (
     <Box mt={4}>
-      <Component {...field} />
+      <Component {...rest} />
     </Box>
   );
 };

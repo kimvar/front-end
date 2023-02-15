@@ -1,10 +1,11 @@
 /**
+** Form Input Element
 {
-      component: "input",
-      name: "name",
-      label: "Görevli Ad",
-      placeholder: "Görevli Ad Soyad",
-    }
+    component: "input",
+    name: "name",
+    label: "Görevli Ad",
+    placeholder: "Görevli Ad Soyad",
+}
 */
 
 import { useFormContext, Controller } from "react-hook-form";

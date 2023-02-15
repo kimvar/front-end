@@ -1,4 +1,5 @@
 /**
+ ** Form Checkbox Element
 {
   component: "checkbox",
   name: "user",

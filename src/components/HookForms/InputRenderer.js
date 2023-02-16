@@ -15,6 +15,11 @@ import RowInput from "./RowInput";
 import SectionInput from "./SectionInput";
 import FormCheckbox from "./FormCheckbox";
 import FormRadio from "./FormRadio";
+import FormDatepicker from "./FormDatepicker";
+import FormPhoneInput from "./FormPhone";
+import { useFormContext } from "react-hook-form";
+import { useContext, useEffect } from "react";
+import { SpecialSectionContext } from "./SpecialSectionProvider";
 
 const elements = {
   input: FormInput,
@@ -23,9 +28,25 @@ const elements = {
   section: SectionInput,
   checkbox: FormCheckbox,
   radio: FormRadio,
+  datepicker: FormDatepicker,
+  phone: FormPhoneInput,
 };
 
-const InputRenderer = ({ field: { component, as, ...rest } }) => {
+const InputRenderer = ({ field: { component, as, name, ...rest } }) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  const { setHasError } = useContext(SpecialSectionContext);
+  let hasError = false;
+  if (name) {
+    hasError = Boolean(errors[name]);
+  }
+
+  useEffect(() => {
+    setHasError(hasError);
+  }, [hasError, setHasError]);
+
   let Component;
   if (component === "custom") {
     Component = as;
@@ -38,7 +59,7 @@ const InputRenderer = ({ field: { component, as, ...rest } }) => {
   }
   return (
     <Box mt={4}>
-      <Component {...rest} />
+      <Component name={name} {...rest} />
     </Box>
   );
 };

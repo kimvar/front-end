@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFilters, usePagination, useTable } from "react-table";
 import DataTable from "../../components/Table/DataTable";
 import TablePagination from "../../components/Table/TablePagination";
@@ -25,8 +25,6 @@ const Reports = () => {
   const debouncedOffset = useDebounce(offset, 600);
   const debouncedFilters = useDebounce(stateFilters, 600);
 
-  console.log("limit", limit);
-  console.log("offset", offset);
   const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI

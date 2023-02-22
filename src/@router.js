@@ -33,6 +33,7 @@ const RequestList = Loadable(
 );
 
 const Login = Loadable(lazy(() => import("features/auth/Login")));
+const Reports = Loadable(lazy(() => import("features/reports/Reports")));
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
       <GuestGuard>
         <Login />
       </GuestGuard>
+    ),
+  },
+  {
+    path: "/reports",
+    element: (
+      <AuthGuard>
+        <Reports />
+      </AuthGuard>
     ),
   },
   {

@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
-import { user } from "utils";
+import { user } from "utils/utils";
 
 const MobileNav = ({ onOpen, ...rest }) => {
   return (
@@ -27,8 +27,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
-      {...rest}
-    >
+      {...rest}>
       <IconButton
         display={{ base: "flex", md: "none" }}
         onClick={onOpen}
@@ -48,16 +47,14 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <MenuButton
               py={2}
               transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
+              _focus={{ boxShadow: "none" }}>
               <HStack>
                 <Avatar size={"sm"} src={"assets/images/user.png"} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
                   spacing="1px"
-                  ml="2"
-                >
+                  ml="2">
                   <Text fontSize="sm">
                     {user.credantials.name} {user.credantials.lastname}
                   </Text>
@@ -72,8 +69,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
             </MenuButton>
             <MenuList
               bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
+              borderColor={useColorModeValue("gray.200", "gray.700")}>
               <MenuItem onClick={() => user.handleLogout()}>Çıkış yap</MenuItem>
             </MenuList>
           </Menu>

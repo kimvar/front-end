@@ -3,9 +3,10 @@ import { useFilters, usePagination, useTable } from "react-table";
 import DataTable from "../../components/Table/DataTable";
 import TablePagination from "../../components/Table/TablePagination";
 import DefaultColumnFilter from "../../components/Table/TableFilter";
-import { filtersToQueryparams, getReportsFn } from "services";
+import { filtersToQueryparams, getReportsFn } from "utils/services";
 import { useQuery } from "react-query";
 import useDebounce from "hooks/useDebounce";
+import LoadingScreen from "components/LoadingScreen";
 
 const getTckn = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -86,7 +87,7 @@ const Reports = () => {
    * @TODO yüklenme ui'nin geliştirilmesi gerekiyor
    */
   if (isLoading) {
-    return <div>Yükleniyor..</div>;
+    return <LoadingScreen />;
   }
 
   return (

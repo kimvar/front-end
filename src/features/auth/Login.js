@@ -18,7 +18,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormRenderer } from "components/HookForms/FormRenderer";
-import { tcknQuery, user } from "utils";
+import { tcknQuery, user } from "utils/utils";
 import { PERMISSIONS } from "@constants";
 import axios from "axios";
 import ErrorMessage from "components/ErrorMessage";
@@ -124,8 +124,7 @@ const Login = () => {
       height="100vh"
       backgroundColor="gray.100"
       justifyContent="center"
-      alignItems="center"
-    >
+      alignItems="center">
       <Center>
         <Box width={"100%"} minW="400px" maxW={{ base: "100px", md: "400px" }}>
           <Card p={2} borderRadius="lg">
@@ -154,8 +153,7 @@ const Login = () => {
                 type="submit"
                 borderRadius={0}
                 variant="solid"
-                width="full"
-              >
+                width="full">
                 Giriş Yap
               </Button>
             </CardFooter>
@@ -166,8 +164,7 @@ const Login = () => {
                 justifyContent={"center"}
                 alignContent="center"
                 width={"100%"}
-                style={{ textAlign: "center" }}
-              >
+                style={{ textAlign: "center" }}>
                 <Center>
                   <Image
                     boxSize="130px"

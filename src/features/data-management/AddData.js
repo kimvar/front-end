@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Box, Flex } from "@chakra-ui/react";
-import { user } from "utils";
+import { user } from "utils/utils";
 
 function AddData() {
   const [timeStamp, setTimeStamp] = useState(Date.now());

@@ -20,7 +20,7 @@ import { format as dateFormat } from "date-fns";
 import Layout from "components/Layout";
 import ErrorMessage from "components/ErrorMessage";
 import { FormRenderer } from "components/HookForms/FormRenderer";
-import { tcknQuery, user } from "utils";
+import { tcknQuery, user } from "utils/utils";
 import CustomModal from "components/CustomModal";
 
 function RequestList() {
@@ -138,8 +138,7 @@ function RequestList() {
                 type="submit"
                 colorScheme="blue"
                 isLoading={isLoading}
-                loadingText="Yükleniyor..."
-              >
+                loadingText="Yükleniyor...">
                 Göster
               </Button>
             </Flex>
@@ -147,8 +146,7 @@ function RequestList() {
               <Button
                 type="button"
                 colorScheme="green"
-                onClick={() => setAddModalOpen(true)}
-              >
+                onClick={() => setAddModalOpen(true)}>
                 Talep Ekle
               </Button>
             )}
@@ -212,16 +210,14 @@ function RequestList() {
                           type="button"
                           onClick={() => handleEdit(item.id)}
                           colorScheme="yellow"
-                          size="sm"
-                        >
+                          size="sm">
                           Düzenle
                         </Button>
                         <Button
                           type="button"
                           onClick={() => handleDetails(item)}
                           colorScheme="blue"
-                          size="sm"
-                        >
+                          size="sm">
                           Detay
                         </Button>
                       </Flex>
@@ -237,38 +233,33 @@ function RequestList() {
         isOpen={isDetailsModalOpen}
         onClose={() => setDetailsModalOpen(false)}
         title={"Talep Detay"}
-        size="2xl"
-      >
+        size="2xl">
         {currentItem.answers ? currentItem.answers[5].answer : ""}
       </CustomModal>
       <CustomModal
         isOpen={isAddModalOpen}
         onClose={() => setAddModalOpen(false)}
         title={"Talep Ekle"}
-        size="5xl"
-      >
+        size="5xl">
         {currentEndUser && (
           <iframe
             style={{ width: "100%", height: "calc(100vh - 120px)" }}
             src={`https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/add-request?talepSahibiAdSoyad=${currentEndUser.name}-${currentEndUser.lastname}&talepSahibiTcKimlik=${currentEndUser.tckn}&talepKarsilayanKisiAdSoyad=${user.credantials.name}-${user.credantials.lastname}&talepKarsilayanKisiTcKimlik=${user.credantials.tckn}`}
             frameBorder="0"
-            title="Talep Form"
-          ></iframe>
+            title="Talep Form"></iframe>
         )}
       </CustomModal>
       <CustomModal
         isOpen={isEditModalOpen}
         onClose={() => setEditModalOpen(false)}
         title={"Talep Düzenle"}
-        size="5xl"
-      >
+        size="5xl">
         {currentEndUser && (
           <iframe
             style={{ width: "100%", height: "calc(100vh - 120px)" }}
             src={`https://jotform.com/edit/${currentSubmissionId}`}
             frameBorder="0"
-            title="Talep Düzenle Form"
-          ></iframe>
+            title="Talep Düzenle Form"></iframe>
         )}
       </CustomModal>
     </Layout>

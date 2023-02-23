@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiUser, FiFileText, FiSearch } from "react-icons/fi";
-import { user } from "utils";
+import { user } from "utils/utils";
 import { PERMISSIONS } from "@constants";
 
 import NavItem from "./NavItem";
@@ -42,8 +42,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}
-    >
+      {...rest}>
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Image
           src="assets/images/logo.png"
@@ -59,8 +58,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
             key={link.name}
             icon={link.icon}
             to={link.to}
-            onClick={onClose}
-          >
+            onClick={onClose}>
             {link.name}
           </NavItem>
         ))}

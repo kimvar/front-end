@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { tcknQuery } from "utils";
+import { tcknQuery } from "utils/utils";
 
 import Layout from "components/Layout";
 import ErrorMessage from "components/ErrorMessage";
@@ -115,8 +115,7 @@ const PersonQuestioning = () => {
               type="submit"
               colorScheme="blue"
               isLoading={isLoading}
-              loadingText="Yükleniyor..."
-            >
+              loadingText="Yükleniyor...">
               Göster
             </Button>
           </Flex>

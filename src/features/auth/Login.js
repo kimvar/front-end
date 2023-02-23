@@ -18,7 +18,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormRenderer } from "components/HookForms/FormRenderer";
-import { tcknQuery, user } from "utils";
+import { tcknQuery, user } from "@utils";
 import { PERMISSIONS } from "@constants";
 import axios from "axios";
 import ErrorMessage from "components/ErrorMessage";

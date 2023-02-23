@@ -1,14 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useFilters, usePagination, useTable } from "react-table";
-import DataTable from "../../components/Table/DataTable";
-import TablePagination from "../../components/Table/TablePagination";
-import DefaultColumnFilter from "../../components/Table/TableFilter";
-import { filtersToQueryparams, getReportsFn } from "services";
+import { TablePagination, DataTable } from "components/Table";
+import { TableFilter } from "components/Table";
+import Layout from "components/Layout";
+import { getReportsFn } from "services";
+import { filtersToQueryparams } from "@utils";
 import { useQuery } from "react-query";
 import useDebounce from "hooks/useDebounce";
+import { TABLE_PROPS } from "@constants";
 
 const Reports = () => {
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(TABLE_PROPS.PAGE_SIZE);
   const [offset, setOffset] = useState(0);
   const [index, setIndex] = useState(0);
 
@@ -20,7 +22,7 @@ const Reports = () => {
   const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
+      Filter: TableFilter,
     }),
     []
   );
@@ -43,13 +45,14 @@ const Reports = () => {
 
   const tableInstance = useTable(
     {
-      columns: columns,
+      columns,
       data: rows,
       defaultColumn,
       pageCount: index + 2,
       manualPagination: true,
       manualFilters: true,
-      initialState: { pageIndex: 0, pageSize: 20 },
+      initialState: { pageIndex: 0, pageSize: TABLE_PROPS.PAGE_SIZE },
+      isLoading,
     },
     useFilters,
     usePagination
@@ -58,32 +61,26 @@ const Reports = () => {
   const {
     state: { pageIndex, filters, pageSize },
   } = tableInstance;
+
   useEffect(() => {
     setLimit(pageSize);
     setOffset(pageIndex * pageSize);
-    setStateFilters(filtersToQueryparams(filters));
     setIndex(pageIndex);
-  }, [pageIndex, pageSize, filters]);
+  }, [pageIndex, pageSize]);
 
-  /*
-   * @TODO yüklenme ui'nin geliştirilmesi gerekiyor
-   */
-  if (isLoading) {
-    return <div>Yükleniyor..</div>;
-  }
+  useEffect(() => {
+    setStateFilters(filtersToQueryparams(filters));
+  }, [filters]);
 
   if (isError) {
     return <div>Beklenmedik bir hata oluştu...</div>;
   }
 
-  /**
-   * @TODO son sayfada ise içerik yok hatası verilmeli.
-   */
   return (
-    <div>
+    <Layout>
       <DataTable tableInstance={tableInstance} />
       <TablePagination tableInstance={tableInstance} />
-    </div>
+    </Layout>
   );
 };
 

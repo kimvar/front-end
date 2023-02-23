@@ -1,6 +1,6 @@
 import { Input } from "@chakra-ui/react";
 
-const DefaultColumnFilter = ({ column }) => {
+const TableFilter = ({ column }) => {
   const { filterValue, setFilter, Header } = column;
   return (
     <Input
@@ -13,4 +13,4 @@ const DefaultColumnFilter = ({ column }) => {
   );
 };
 
-export default DefaultColumnFilter;
+export default TableFilter;

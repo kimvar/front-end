@@ -10,9 +10,17 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
+import { NoData, RowSkeleton } from "components/Table";
+
 const DataTable = ({ tableInstance }) => {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    isLoading,
+  } = tableInstance;
 
   return (
     <TableContainer>
@@ -35,25 +43,30 @@ const DataTable = ({ tableInstance }) => {
         </Thead>
 
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-
-            return (
-              <Tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      maxWidth="100px"
-                      whiteSpace={"pre-wrap"}
-                    >
-                      {cell.render("Cell")}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            );
-          })}
+          {isLoading ? (
+            <RowSkeleton cellSize={3} />
+          ) : rows.length > 0 ? (
+            rows.map((row) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        maxWidth="100px"
+                        whiteSpace={"pre-wrap"}
+                      >
+                        {cell.render("Cell")}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })
+          ) : (
+            <NoData />
+          )}
         </Tbody>
       </Table>
     </TableContainer>

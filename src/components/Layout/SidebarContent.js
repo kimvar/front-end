@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FiUser, FiFileText, FiSearch } from "react-icons/fi";
-import { user } from "utils";
+import { user } from "@utils";
 import { PERMISSIONS } from "@constants";
 
 import NavItem from "./NavItem";

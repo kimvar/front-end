@@ -1,8 +1,10 @@
 import axios from "./@axios";
 
 /**
- * @todo utils klasörü olması lazım
+ * @TODO utils klasörü olması lazım
+ * sadeleştirilmeli
  */
+
 export const filtersToQueryparams = (filters) => {
   const filtersReduced = filters
     .map((item) => {
@@ -22,9 +24,9 @@ export const filtersToQueryparams = (filters) => {
   return filterQuery;
 };
 
-export const getReportsFn = async ({ id, limit, offset, filters }) => {
+export const getReportsFn = async ({ limit, offset, filters }) => {
   const response = await axios.get(
-    `/report?identityNumber=${id}&limit=${limit}&offset=${offset}${filters}`
+    `/report?limit=${limit}&offset=${offset}${filters}`
   );
   return response.data;
 };

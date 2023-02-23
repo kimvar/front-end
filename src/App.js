@@ -27,7 +27,13 @@ if (process.env.NODE_ENV === "production") {
   getAnalytics(app);
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+    },
+  },
+});
 
 function App() {
   return (

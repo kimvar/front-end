@@ -4,6 +4,7 @@ import router from "./@router";
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBTAybHY_w0A9kVQZjlB7H9H35-1bDGGbY",
@@ -26,11 +27,15 @@ if (process.env.NODE_ENV === "production") {
   getAnalytics(app);
 }
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <ChakraProvider>
-      <RouterProvider router={router} />
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 

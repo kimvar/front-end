@@ -56,7 +56,9 @@ const router = createBrowserRouter([
     path: "/reports",
     element: (
       <AuthGuard>
-        <Reports />
+        <PermissionGuard has={PERMISSIONS.RAPOR_ALABILIR}>
+          <Reports />
+        </PermissionGuard>
       </AuthGuard>
     ),
   },

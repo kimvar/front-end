@@ -67,6 +67,7 @@ const Login = () => {
         const talepOlusturabilir = res.data.content[0].answers["14"];
         const kisiSorgulayabilir = res.data.content[0].answers["15"];
         const veriGirebilir = res.data.content[0].answers["16"];
+        const raporAlabilir = res.data.content[0].answers["17"];
 
         if (talepOlusturabilir.answer === "1") {
           permissions.push(PERMISSIONS.TALEP_OLUSTURABILIR);
@@ -76,6 +77,9 @@ const Login = () => {
         }
         if (veriGirebilir.answer === "1") {
           permissions.push(PERMISSIONS.VERI_GIREBILIR);
+        }
+        if (raporAlabilir.answer === "1") {
+          permissions.push(PERMISSIONS.RAPOR_ALABILIR);
         }
 
         user.handleLogin({ ...data, permissions });

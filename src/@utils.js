@@ -56,3 +56,22 @@ export const tcknQuery = (tckn) => {
     return false;
   }
 };
+
+export const filtersToQueryparams = (filters) => {
+  const filtersReduced = filters
+    .map((item) => {
+      return {
+        [item.id]: item.value,
+      };
+    })
+    .reduce((acc, val) => {
+      return { ...acc, ...val };
+    }, {});
+
+  let filterQuery = "";
+  if (filtersReduced && Object.keys(filtersReduced).length > 0) {
+    filterQuery = `&filters=${JSON.stringify(filtersReduced)}`;
+  }
+
+  return filterQuery;
+};

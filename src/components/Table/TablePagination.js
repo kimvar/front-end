@@ -1,4 +1,5 @@
 import { Button, Flex } from "@chakra-ui/react";
+import { TABLE_PROPS } from "@constants";
 
 const TablePagination = ({ tableInstance }) => {
   const {
@@ -28,7 +29,7 @@ const TablePagination = ({ tableInstance }) => {
           setPageSize(Number(e.target.value));
         }}
       >
-        {[10, 20, 30, 40, 50].map((pageSize) => (
+        {TABLE_PROPS.SELECTABLE_PAGE_SIZES.map((pageSize) => (
           <option key={pageSize} value={pageSize}>
             Göster {pageSize}
           </option>

@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
-import { user } from "utils";
+import { user } from "@utils";
 
 const MobileNav = ({ onOpen, ...rest }) => {
   return (

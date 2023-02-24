@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useFilters, usePagination, useTable } from "react-table";
 import { TablePagination, DataTable } from "components/Table";
 import { TableFilter } from "components/Table";
@@ -13,7 +13,10 @@ const Reports = () => {
   const [limit, setLimit] = useState(TABLE_PROPS.PAGE_SIZE);
   const [offset, setOffset] = useState(0);
   const [index, setIndex] = useState(0);
+  const isMountedRef = useRef(false);
+  const isMounted = isMountedRef.current;
 
+  const [columns, setColumns] = useState([]);
   const [stateFilters, setStateFilters] = useState([]);
   const debouncedLimit = useDebounce(limit, 600);
   const debouncedOffset = useDebounce(offset, 600);
@@ -41,8 +44,14 @@ const Reports = () => {
       })
   );
 
-  const { columns = emptyArr, rows = emptyArr } = data || {};
+  const { columns: originalColumns = emptyArr, rows = emptyArr } = data || {};
 
+  useEffect(() => {
+    if (!isMounted && originalColumns.length > 0) {
+      isMountedRef.current = true;
+      return setColumns(originalColumns);
+    }
+  }, [isMounted, originalColumns]);
   const tableInstance = useTable(
     {
       columns,

@@ -5,7 +5,7 @@ import {
   Image,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FiUser, FiFileText, FiSearch } from "react-icons/fi";
+import { FiUser, FiFileText, FiSearch, FiPieChart } from "react-icons/fi";
 import { user } from "@utils";
 import { PERMISSIONS } from "@constants";
 
@@ -30,6 +30,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
       icon: FiSearch,
       to: "/request-list",
       show: user.hasPermission(PERMISSIONS.TALEP_OLUSTURABILIR),
+    },
+    {
+      name: "Rapor",
+      icon: FiPieChart,
+      to: "/reports",
+      show: user.hasPermission(PERMISSIONS.RAPOR_ALABILIR),
     },
   ];
 

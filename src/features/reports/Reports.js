@@ -31,14 +31,17 @@ const Reports = () => {
     return [];
   }, []);
 
-  const { data, isLoading, isError } = useQuery(
+  const { data, isFetching, isError } = useQuery(
     ["reports", { debouncedLimit, debouncedOffset, debouncedFilters }],
     () =>
       getReportsFn({
         limit: debouncedLimit,
         offset: debouncedOffset,
         filters: debouncedFilters,
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   const { columns = emptyArr, rows = emptyArr } = data || {};
@@ -52,7 +55,6 @@ const Reports = () => {
       manualPagination: true,
       manualFilters: true,
       initialState: { pageIndex: 0, pageSize: TABLE_PROPS.PAGE_SIZE },
-      isLoading,
     },
     useFilters,
     usePagination
@@ -78,7 +80,7 @@ const Reports = () => {
 
   return (
     <Layout>
-      <DataTable tableInstance={tableInstance} />
+      <DataTable tableInstance={tableInstance} isLoading={isFetching} />
       <TablePagination tableInstance={tableInstance} />
     </Layout>
   );

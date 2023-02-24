@@ -12,15 +12,9 @@ import {
 
 import { NoData, RowSkeleton } from "components/Table";
 
-const DataTable = ({ tableInstance }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    isLoading,
-  } = tableInstance;
+const DataTable = ({ tableInstance, isLoading }) => {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
 
   return (
     <TableContainer>

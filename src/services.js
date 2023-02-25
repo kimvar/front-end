@@ -6,3 +6,8 @@ export const getReportsFn = async ({ limit, offset, filters }) => {
   );
   return response.data;
 };
+
+export const registerReportRequest = async () => {
+  const response = await axios.post("/registerReportRequest");
+  return response.data.token;
+};

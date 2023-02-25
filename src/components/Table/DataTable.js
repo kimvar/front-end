@@ -31,7 +31,9 @@ const DataTable = ({ tableInstance }) => {
               {headerGroup.headers.map((column) => (
                 <Th {...column.getHeaderProps()}>
                   <Flex flexDirection={"column"} gap={2}>
-                    {column.render("Header")}
+                    <span style={{ whiteSpace: "normal" }}>
+                      {column.render("Header")}
+                    </span>
                     <div>
                       {column.canFilter ? column.render("Filter") : null}
                     </div>
@@ -44,7 +46,7 @@ const DataTable = ({ tableInstance }) => {
 
         <Tbody {...getTableBodyProps()}>
           {isLoading ? (
-            <RowSkeleton cellSize={3} />
+            <RowSkeleton cellSize={11} />
           ) : rows.length > 0 ? (
             rows.map((row) => {
               prepareRow(row);

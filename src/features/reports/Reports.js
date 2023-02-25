@@ -5,14 +5,18 @@ import { TableFilter } from "components/Table";
 import Layout from "components/Layout";
 import { getReportsFn } from "services";
 import { filtersToQueryparams } from "@utils";
+import { TABLE_PROPS } from "@constants";
 import { useQuery } from "react-query";
 import useDebounce from "hooks/useDebounce";
-import { TABLE_PROPS } from "@constants";
+import { Flex } from "@chakra-ui/react";
+import DownloadButton from "./DownloadButton";
+import ErrorMessage from "components/ErrorMessage";
 
 const Reports = () => {
   const [limit, setLimit] = useState(TABLE_PROPS.PAGE_SIZE);
   const [offset, setOffset] = useState(0);
   const [index, setIndex] = useState(0);
+  const [errorMessage, setErrorMessage] = useState(null);
   const isMountedRef = useRef(false);
   const isMounted = isMountedRef.current;
 
@@ -81,12 +85,18 @@ const Reports = () => {
     setStateFilters(filtersToQueryparams(filters));
   }, [filters]);
 
-  if (isError) {
-    return <div>Beklenmedik bir hata oluştu...</div>;
-  }
+  useEffect(() => {
+    if (isError) {
+      setErrorMessage("Beklenmedik bir hata oluştu..");
+    }
+  }, [isError]);
 
   return (
     <Layout>
+      <ErrorMessage message={errorMessage} />
+      <Flex w="full" justifyContent="flex-end" mb={10}>
+        <DownloadButton setErrorMessage={setErrorMessage} />
+      </Flex>
       <DataTable tableInstance={tableInstance} />
       <TablePagination tableInstance={tableInstance} />
     </Layout>

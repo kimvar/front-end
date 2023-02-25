@@ -13,7 +13,7 @@ const DownloadButton = ({ setErrorMessage }) => {
       const _token = await registerReportRequest();
       if (_token) {
         window.open(
-          `${process.env.REACT_APP_API_URL}/downloadReport?type=excel&token=${_token}&identityNumber=${user.credantials.tckn}`
+          `${process.env.REACT_APP_API_URL}downloadReport?type=excel&token=${_token}&identityNumber=${user.credantials.tckn}`
         );
       } else {
         setErrorMessage("Beklenmedik bir hata oluştu.");

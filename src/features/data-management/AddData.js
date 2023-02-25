@@ -5,7 +5,7 @@ import { user } from "@utils";
 function AddData() {
   const [timeStamp, setTimeStamp] = useState(Date.now());
 
-  const iframeSrc = `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/add-guest?id=${user.credantials.name}-${user.credantials.lastname}-${user.credantials.tckn}`;
+  const iframeSrc = `https://europe-west3-canvas-syntax-367803.cloudfunctions.net/proxy/add-guest?id=new&userID=${user.credantials.name}-${user.credantials.lastname}-${user.credantials.tckn}&timestamp=${timeStamp}`;
 
   const handleRefresh = () => {
     setTimeStamp(Date.now());

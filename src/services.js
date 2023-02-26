@@ -11,3 +11,11 @@ export const registerReportRequest = async () => {
   const response = await axios.post("/registerReportRequest");
   return response.data.token;
 };
+
+export const downloadReports = async ({ tckn }) => {
+  const response = await axios.get(
+    `registerReportRequest?type=excel&identityNumber=${tckn}`
+  );
+  return response.data;
+  //
+};

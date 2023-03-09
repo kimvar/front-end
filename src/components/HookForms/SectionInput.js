@@ -1,35 +1,70 @@
-import { Button, Flex, Box } from "@chakra-ui/react";
-import { useContext } from "react";
+/**
+ * Form Section Element
+{
+  component: "section",
+  id: "first",
+  label: "Hello",
+  fields: [
+    {
+      component: "input",
+      name: "name",
+      label: "Görevli Ad",
+      placeholder: "Görevli Ad Soyad",
+    },
+  ],
+},
+ */
+import SectionWrapper from "./SectionWrapper";
+import SpecialSectionProvider from "./SpecialSectionProvider";
+
 import { InputRenderer } from "./InputRenderer";
 import { SpecialFormContext } from "./SpecialFormProvider";
+import { Button, Flex, Box } from "@chakra-ui/react";
+import { useContext } from "react";
 
-const SectionInput = ({ name, label, fields }) => {
+const SectionInput = ({ id, label, fields }) => {
   const { accordion, setAccordion } = useContext(SpecialFormContext);
+
   const expand = () => {
-    setAccordion(name);
+    setAccordion(id);
   };
   const collapse = () => {
     setAccordion(null);
   };
 
-  if (accordion !== name) {
-    return (
-      <Button onClick={expand} width="100%">
-        {label}
-      </Button>
-    );
-  }
+  const toggle = () => {
+    if (accordion === id) {
+      collapse();
+    } else {
+      expand();
+    }
+  };
+
   return (
-    <Box>
-      <Button onClick={collapse} width="100%">
-        {label}
-      </Button>
-      <Flex flexDirection={"row"} gap="10px">
-        {fields.map((field) => {
-          return <InputRenderer key={field.name} field={field} />;
-        })}
-      </Flex>
-    </Box>
+    <SpecialSectionProvider>
+      <SectionWrapper>
+        {({ hasError }) => (
+          <Box>
+            <Button
+              onClick={toggle}
+              width="100%"
+              border={"2px"}
+              borderColor={hasError ? "red" : "transparent"}
+              backgroundColor={hasError && "red.100"}
+            >
+              {label}
+            </Button>
+            <Flex flexDirection={"column"} gap="10px" hidden={accordion !== id}>
+              {fields.map((field) => {
+                return (
+                  <InputRenderer key={field.name || field.id} field={field} />
+                );
+              })}
+            </Flex>
+          </Box>
+        )}
+      </SectionWrapper>
+    </SpecialSectionProvider>
   );
 };
 

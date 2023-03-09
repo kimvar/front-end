@@ -20,7 +20,7 @@ import { format as dateFormat } from "date-fns";
 import Layout from "components/Layout";
 import ErrorMessage from "components/ErrorMessage";
 import { FormRenderer } from "components/HookForms/FormRenderer";
-import { tcknQuery, user } from "utils";
+import { tcknQuery, user } from "@utils";
 import CustomModal from "components/CustomModal";
 
 function RequestList() {

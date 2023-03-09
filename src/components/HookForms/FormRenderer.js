@@ -11,7 +11,10 @@ const FormRenderer = ({ schema }) => {
         <Box mt={4}>
           {schema.fields.map((field) => {
             return (
-              <InputRenderer key={field.name} field={field}></InputRenderer>
+              <InputRenderer
+                key={field.name || field.id}
+                field={field}
+              ></InputRenderer>
             );
           })}
         </Box>

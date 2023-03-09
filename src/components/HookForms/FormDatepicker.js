@@ -1,24 +1,28 @@
 /**
-** Form Input Element
+** Form Datepicker Element
 {
-    component: "input",
-    name: "name",
-    label: "Görevli Ad",
-    placeholder: "Görevli Ad Soyad",
+    {
+        component: "datepicker",
+        name: "date",
+        label: "Start Date",
+    },
 }
 */
 
 import { useFormContext, Controller } from "react-hook-form";
 import {
-  Input,
   Text,
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Input,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ReactInputMask from "react-input-mask";
 
-function FormInput({ name, label, type = "text" }) {
+function FormDatepicker({ name, label }) {
   if (!name || !label) {
     throw new Error(
       "name and label required on input type. [Can's Tiny Data Driven Form Builder]"
@@ -34,7 +38,16 @@ function FormInput({ name, label, type = "text" }) {
           <FormLabel htmlFor={name}>
             <Text fontSize="xs">{label}</Text>
           </FormLabel>
-          <Input id={name} {...field} type={type} />
+          <ReactDatePicker
+            id={name}
+            customInput={
+              <Input as={ReactInputMask} {...field} mask="99-99-9999" />
+            }
+            selected={field.value}
+            dateFormat="dd-MM-yyyy"
+            placeholderText="DD-MM-YYYY"
+            onChange={field.onChange}
+          />
           <FormErrorMessage>
             {error && <Text fontSize={"sx"}>{error.message}</Text>}
           </FormErrorMessage>
@@ -44,10 +57,9 @@ function FormInput({ name, label, type = "text" }) {
   );
 }
 
-FormInput.propTypes = {
+FormDatepicker.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  type: PropTypes.string,
 };
 
-export default FormInput;
+export default FormDatepicker;

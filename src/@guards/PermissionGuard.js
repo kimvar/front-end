@@ -1,4 +1,4 @@
-import { user } from "utils";
+import { user } from "@utils";
 
 const PermissionGuard = ({ children, has }) => {
   const _permissions = user.credantials.permissions || [];

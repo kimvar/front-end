@@ -1,30 +1,32 @@
 /**
-** Form Input Element
+** Form Phone Element
 {
-    component: "input",
-    name: "name",
-    label: "Görevli Ad",
-    placeholder: "Görevli Ad Soyad",
-}
+    component: "phone",
+    name: "phonenumber",
+    label: "Phone Number",
+},
 */
 
 import { useFormContext, Controller } from "react-hook-form";
 import {
-  Input,
   Text,
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Input,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
+import ReactInputMask from "react-input-mask";
 
-function FormInput({ name, label, type = "text" }) {
+function FormPhoneInput({ name, label, ...rest }) {
   if (!name || !label) {
     throw new Error(
       "name and label required on input type. [Can's Tiny Data Driven Form Builder]"
     );
   }
+
   const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
@@ -34,7 +36,14 @@ function FormInput({ name, label, type = "text" }) {
           <FormLabel htmlFor={name}>
             <Text fontSize="xs">{label}</Text>
           </FormLabel>
-          <Input id={name} {...field} type={type} />
+          <Input
+            id={name}
+            as={ReactInputMask}
+            mask="(999) 999 99 99"
+            placeholder="(999) 999 99 99"
+            {...rest}
+            {...field}
+          />
           <FormErrorMessage>
             {error && <Text fontSize={"sx"}>{error.message}</Text>}
           </FormErrorMessage>
@@ -44,10 +53,9 @@ function FormInput({ name, label, type = "text" }) {
   );
 }
 
-FormInput.propTypes = {
+FormPhoneInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  type: PropTypes.string,
 };
 
-export default FormInput;
+export default FormPhoneInput;

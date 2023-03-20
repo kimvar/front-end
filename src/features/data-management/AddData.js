@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Box, Flex } from "@chakra-ui/react";
-import { user } from "utils";
+import { user } from "@utils";
 
 function AddData() {
   const [timeStamp, setTimeStamp] = useState(Date.now());
@@ -23,8 +23,7 @@ function AddData() {
           <iframe
             src={iframeSrc + "&timestamp=" + timeStamp}
             title="Form"
-            className="iframe"
-          ></iframe>
+            className="iframe"></iframe>
         </Flex>
       </Box>
     </Box>

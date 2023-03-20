@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { user } from "utils";
+import { user } from "@utils";
 
 const AuthGuard = ({ children }) => {
   // TODO: remove permissions check after a while
